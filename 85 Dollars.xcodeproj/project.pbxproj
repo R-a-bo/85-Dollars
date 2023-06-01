@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		121B47552A28699100E4E41D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47542A28699100E4E41D /* AppDelegate.swift */; };
 		121B47572A28699100E4E41D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47562A28699100E4E41D /* SceneDelegate.swift */; };
-		121B47592A28699100E4E41D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47582A28699100E4E41D /* ViewController.swift */; };
 		121B475C2A28699100E4E41D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 121B475A2A28699100E4E41D /* Main.storyboard */; };
 		121B475E2A28699200E4E41D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 121B475D2A28699200E4E41D /* Assets.xcassets */; };
 		121B47612A28699200E4E41D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 121B475F2A28699200E4E41D /* LaunchScreen.storyboard */; };
 		121B476C2A28699300E4E41D /* _5_DollarsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B476B2A28699300E4E41D /* _5_DollarsTests.swift */; };
 		121B47762A28699300E4E41D /* _5_DollarsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47752A28699300E4E41D /* _5_DollarsUITests.swift */; };
 		121B47782A28699300E4E41D /* _5_DollarsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47772A28699300E4E41D /* _5_DollarsUITestsLaunchTests.swift */; };
+		121B47852A28709F00E4E41D /* ScheduleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47842A28709F00E4E41D /* ScheduleListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +39,6 @@
 		121B47512A28699100E4E41D /* 85 Dollars.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "85 Dollars.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		121B47542A28699100E4E41D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		121B47562A28699100E4E41D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		121B47582A28699100E4E41D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		121B475B2A28699100E4E41D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		121B475D2A28699200E4E41D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		121B47602A28699200E4E41D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		121B47712A28699300E4E41D /* 85 DollarsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "85 DollarsUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		121B47752A28699300E4E41D /* _5_DollarsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _5_DollarsUITests.swift; sourceTree = "<group>"; };
 		121B47772A28699300E4E41D /* _5_DollarsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _5_DollarsUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		121B47842A28709F00E4E41D /* ScheduleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,8 +101,8 @@
 			children = (
 				121B47542A28699100E4E41D /* AppDelegate.swift */,
 				121B47562A28699100E4E41D /* SceneDelegate.swift */,
-				121B47582A28699100E4E41D /* ViewController.swift */,
 				121B475A2A28699100E4E41D /* Main.storyboard */,
+				121B47842A28709F00E4E41D /* ScheduleListViewController.swift */,
 				121B475D2A28699200E4E41D /* Assets.xcassets */,
 				121B475F2A28699200E4E41D /* LaunchScreen.storyboard */,
 				121B47622A28699200E4E41D /* Info.plist */,
@@ -258,7 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				121B47592A28699100E4E41D /* ViewController.swift in Sources */,
+				121B47852A28709F00E4E41D /* ScheduleListViewController.swift in Sources */,
 				121B47552A28699100E4E41D /* AppDelegate.swift in Sources */,
 				121B47572A28699100E4E41D /* SceneDelegate.swift in Sources */,
 			);
