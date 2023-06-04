@@ -25,47 +25,31 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="156"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aad-ET-BaK">
-                                            <rect key="frame" x="100" y="11" width="238" height="116"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aad-ET-BaK">
+                                            <rect key="frame" x="105" y="30" width="238" height="116"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="116" id="cga-R8-yJF"/>
                                                 <constraint firstAttribute="width" constant="238" id="rJd-zm-KGX"/>
                                             </constraints>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LFv-Ub-Smn">
-                                            <rect key="frame" x="353" y="15" width="25" height="22"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="22" id="gbF-wI-Inl"/>
-                                                <constraint firstAttribute="width" constant="25" id="lwq-1M-JDe"/>
-                                            </constraints>
-                                            <menu key="menu" id="mE1-vg-hUa">
-                                                <children>
-                                                    <command title="Item 1" id="vgr-cd-cQw"/>
-                                                    <command title="Item 2" id="vzk-kO-cSH"/>
-                                                </children>
-                                            </menu>
-                                            <state key="normal" title="Button">
-                                                <imageReference key="image" image="ellipsis" catalog="system" symbolScale="large"/>
-                                            </state>
-                                        </button>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4eN-zX-M3p">
-                                            <rect key="frame" x="20" y="10" width="80" height="136"/>
+                                            <rect key="frame" x="20" y="10" width="85" height="136"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moi-y6-Jxu">
-                                                    <rect key="frame" x="35" y="78.666666666666671" width="10.333333333333336" height="21"/>
+                                                    <rect key="frame" x="37.333333333333336" y="78.666666666666671" width="10.333333333333336" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Days until street cleaning" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uyi-7B-kWD">
-                                                    <rect key="frame" x="16" y="115" width="49" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days until street cleaning" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uyi-7B-kWD">
+                                                    <rect key="frame" x="10" y="107.66666666666667" width="65" height="19.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AOq-Xj-w4w">
-                                                    <rect key="frame" x="15.666666666666664" y="8" width="50.999999999999993" height="31"/>
+                                                    <rect key="frame" x="18" y="8" width="51" height="31"/>
                                                 </switch>
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -80,16 +64,44 @@
                                                 <constraint firstItem="Uyi-7B-kWD" firstAttribute="centerX" secondItem="moi-y6-Jxu" secondAttribute="centerX" id="zOF-Mb-ewv"/>
                                             </constraints>
                                         </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7g0-wH-ujo">
+                                            <rect key="frame" x="343" y="0.0" width="50" height="156"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LFv-Ub-Smn">
+                                                    <rect key="frame" x="12.666666666666686" y="10" width="25" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="gbF-wI-Inl"/>
+                                                        <constraint firstAttribute="width" constant="25" id="lwq-1M-JDe"/>
+                                                    </constraints>
+                                                    <menu key="menu" id="mE1-vg-hUa">
+                                                        <children>
+                                                            <command title="Item 1" id="vgr-cd-cQw"/>
+                                                            <command title="Item 2" id="vzk-kO-cSH"/>
+                                                        </children>
+                                                    </menu>
+                                                    <state key="normal" title="Button">
+                                                        <imageReference key="image" image="ellipsis" catalog="system" symbolScale="large"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstItem="LFv-Ub-Smn" firstAttribute="top" secondItem="7g0-wH-ujo" secondAttribute="top" constant="10" id="Rpw-ZR-js7"/>
+                                                <constraint firstAttribute="width" constant="50" id="jtH-M9-MG7"/>
+                                                <constraint firstItem="LFv-Ub-Smn" firstAttribute="centerX" secondItem="7g0-wH-ujo" secondAttribute="centerX" id="s5t-Xo-WZ5"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Aad-ET-BaK" firstAttribute="leading" secondItem="4eN-zX-M3p" secondAttribute="trailing" id="0b4-oz-zsi"/>
-                                        <constraint firstItem="LFv-Ub-Smn" firstAttribute="top" secondItem="9rv-8p-Whb" secondAttribute="top" constant="15" id="75n-eS-VbX"/>
+                                        <constraint firstAttribute="bottom" secondItem="7g0-wH-ujo" secondAttribute="bottom" id="2mR-mB-DeX"/>
                                         <constraint firstItem="4eN-zX-M3p" firstAttribute="top" secondItem="9rv-8p-Whb" secondAttribute="top" constant="10" id="ABy-bs-sNy"/>
-                                        <constraint firstItem="LFv-Ub-Smn" firstAttribute="leading" secondItem="Aad-ET-BaK" secondAttribute="trailing" constant="15" id="Bfb-qu-o7W"/>
-                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Aad-ET-BaK" secondAttribute="bottom" constant="10" id="DZk-pZ-1zx"/>
-                                        <constraint firstAttribute="trailing" secondItem="LFv-Ub-Smn" secondAttribute="trailing" constant="15" id="JWy-TC-e7g"/>
+                                        <constraint firstAttribute="bottom" secondItem="Aad-ET-BaK" secondAttribute="bottom" constant="10" id="DZk-pZ-1zx"/>
+                                        <constraint firstItem="7g0-wH-ujo" firstAttribute="top" secondItem="9rv-8p-Whb" secondAttribute="top" id="EwN-g0-szw"/>
+                                        <constraint firstAttribute="trailing" secondItem="7g0-wH-ujo" secondAttribute="trailing" id="FJa-Xi-eoW"/>
                                         <constraint firstAttribute="bottom" secondItem="4eN-zX-M3p" secondAttribute="bottom" constant="10" id="JXR-Hb-7l8"/>
                                         <constraint firstItem="4eN-zX-M3p" firstAttribute="leading" secondItem="9rv-8p-Whb" secondAttribute="leading" constant="20" symbolic="YES" id="OMR-Le-DAy"/>
+                                        <constraint firstItem="7g0-wH-ujo" firstAttribute="leading" secondItem="Aad-ET-BaK" secondAttribute="trailing" id="R6b-yf-BTF"/>
                                         <constraint firstItem="Aad-ET-BaK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9rv-8p-Whb" secondAttribute="top" constant="10" id="kgO-qw-CdZ"/>
                                     </constraints>
                                 </tableViewCellContentView>
