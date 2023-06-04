@@ -18,21 +18,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Schedule" rowHeight="156" id="myn-qw-YVo">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Schedule" rowHeight="156" id="myn-qw-YVo" customClass="ScheduleListViewCell" customModule="_5_Dollars" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="156"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="myn-qw-YVo" id="9rv-8p-Whb">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="156"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aad-ET-BaK">
-                                            <rect key="frame" x="105" y="30" width="238" height="116"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="116" id="cga-R8-yJF"/>
-                                                <constraint firstAttribute="width" constant="238" id="rJd-zm-KGX"/>
-                                            </constraints>
-                                        </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4eN-zX-M3p">
                                             <rect key="frame" x="20" y="10" width="85" height="136"/>
                                             <subviews>
@@ -62,6 +54,14 @@
                                                 <constraint firstItem="Uyi-7B-kWD" firstAttribute="top" secondItem="moi-y6-Jxu" secondAttribute="bottom" constant="8" symbolic="YES" id="i0t-dV-Spn"/>
                                                 <constraint firstItem="moi-y6-Jxu" firstAttribute="centerX" secondItem="AOq-Xj-w4w" secondAttribute="centerX" id="nei-2J-1Ek"/>
                                                 <constraint firstItem="Uyi-7B-kWD" firstAttribute="centerX" secondItem="moi-y6-Jxu" secondAttribute="centerX" id="zOF-Mb-ewv"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aad-ET-BaK">
+                                            <rect key="frame" x="105" y="30" width="238" height="116"/>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="116" id="cga-R8-yJF"/>
+                                                <constraint firstAttribute="width" constant="238" id="rJd-zm-KGX"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7g0-wH-ujo">
@@ -105,6 +105,12 @@
                                         <constraint firstItem="Aad-ET-BaK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9rv-8p-Whb" secondAttribute="top" constant="10" id="kgO-qw-CdZ"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="calendar" destination="Aad-ET-BaK" id="3BM-Vm-pv9"/>
+                                    <outlet property="countdown" destination="moi-y6-Jxu" id="bW8-LO-RPc"/>
+                                    <outlet property="optionsButton" destination="LFv-Ub-Smn" id="OXE-7q-zxh"/>
+                                    <outlet property="switchButton" destination="AOq-Xj-w4w" id="8za-tF-KYq"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

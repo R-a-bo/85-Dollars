@@ -16,6 +16,8 @@
 		121B47762A28699300E4E41D /* _5_DollarsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47752A28699300E4E41D /* _5_DollarsUITests.swift */; };
 		121B47782A28699300E4E41D /* _5_DollarsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47772A28699300E4E41D /* _5_DollarsUITestsLaunchTests.swift */; };
 		121B47852A28709F00E4E41D /* ScheduleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47842A28709F00E4E41D /* ScheduleListViewController.swift */; };
+		12679D9B2A2C2D140007E8D3 /* ScheduleListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12679D9A2A2C2D140007E8D3 /* ScheduleListViewCell.swift */; };
+		12679D9D2A2C3BD50007E8D3 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12679D9C2A2C3BD50007E8D3 /* Schedule.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		121B47752A28699300E4E41D /* _5_DollarsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _5_DollarsUITests.swift; sourceTree = "<group>"; };
 		121B47772A28699300E4E41D /* _5_DollarsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _5_DollarsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		121B47842A28709F00E4E41D /* ScheduleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListViewController.swift; sourceTree = "<group>"; };
+		12679D9A2A2C2D140007E8D3 /* ScheduleListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListViewCell.swift; sourceTree = "<group>"; };
+		12679D9C2A2C3BD50007E8D3 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +107,8 @@
 				121B47562A28699100E4E41D /* SceneDelegate.swift */,
 				121B475A2A28699100E4E41D /* Main.storyboard */,
 				121B47842A28709F00E4E41D /* ScheduleListViewController.swift */,
+				12679D9C2A2C3BD50007E8D3 /* Schedule.swift */,
+				12679D9A2A2C2D140007E8D3 /* ScheduleListViewCell.swift */,
 				121B475D2A28699200E4E41D /* Assets.xcassets */,
 				121B475F2A28699200E4E41D /* LaunchScreen.storyboard */,
 				121B47622A28699200E4E41D /* Info.plist */,
@@ -259,7 +265,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				121B47852A28709F00E4E41D /* ScheduleListViewController.swift in Sources */,
+				12679D9B2A2C2D140007E8D3 /* ScheduleListViewCell.swift in Sources */,
 				121B47552A28699100E4E41D /* AppDelegate.swift in Sources */,
+				12679D9D2A2C3BD50007E8D3 /* Schedule.swift in Sources */,
 				121B47572A28699100E4E41D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
