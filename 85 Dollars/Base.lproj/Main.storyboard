@@ -18,24 +18,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Schedule" rowHeight="156" id="myn-qw-YVo" customClass="ScheduleListViewCell" customModule="_5_Dollars" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="50" width="393" height="156"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Schedule" rowHeight="221" id="myn-qw-YVo" customClass="ScheduleListViewCell" customModule="_5_Dollars" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="221"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="myn-qw-YVo" id="9rv-8p-Whb">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="156"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="221"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4eN-zX-M3p">
-                                            <rect key="frame" x="20" y="10" width="85" height="136"/>
+                                            <rect key="frame" x="20" y="10" width="85" height="201"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moi-y6-Jxu">
-                                                    <rect key="frame" x="37.333333333333336" y="78.666666666666671" width="10.333333333333336" height="21"/>
+                                                    <rect key="frame" x="37.333333333333336" y="143.66666666666666" width="10.333333333333336" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days until street cleaning" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uyi-7B-kWD">
-                                                    <rect key="frame" x="10" y="107.66666666666667" width="65" height="19.333333333333329"/>
+                                                    <rect key="frame" x="10" y="172.66666666666666" width="65" height="19.333333333333343"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -57,15 +57,14 @@
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aad-ET-BaK">
-                                            <rect key="frame" x="105" y="30" width="238" height="116"/>
+                                            <rect key="frame" x="105" y="10" width="238" height="201"/>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
-                                                <constraint firstAttribute="height" constant="116" id="cga-R8-yJF"/>
                                                 <constraint firstAttribute="width" constant="238" id="rJd-zm-KGX"/>
                                             </constraints>
                                         </view>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7g0-wH-ujo">
-                                            <rect key="frame" x="343" y="0.0" width="50" height="156"/>
+                                            <rect key="frame" x="343" y="0.0" width="50" height="221"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LFv-Ub-Smn">
                                                     <rect key="frame" x="12.666666666666686" y="10" width="25" height="22"/>
@@ -102,11 +101,11 @@
                                         <constraint firstAttribute="bottom" secondItem="4eN-zX-M3p" secondAttribute="bottom" constant="10" id="JXR-Hb-7l8"/>
                                         <constraint firstItem="4eN-zX-M3p" firstAttribute="leading" secondItem="9rv-8p-Whb" secondAttribute="leading" constant="20" symbolic="YES" id="OMR-Le-DAy"/>
                                         <constraint firstItem="7g0-wH-ujo" firstAttribute="leading" secondItem="Aad-ET-BaK" secondAttribute="trailing" id="R6b-yf-BTF"/>
-                                        <constraint firstItem="Aad-ET-BaK" firstAttribute="top" relation="greaterThanOrEqual" secondItem="9rv-8p-Whb" secondAttribute="top" constant="10" id="kgO-qw-CdZ"/>
+                                        <constraint firstItem="Aad-ET-BaK" firstAttribute="top" secondItem="9rv-8p-Whb" secondAttribute="top" constant="10" id="kgO-qw-CdZ"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="calendar" destination="Aad-ET-BaK" id="3BM-Vm-pv9"/>
+                                    <outlet property="calendarContainerView" destination="Aad-ET-BaK" id="Jfn-yu-vUQ"/>
                                     <outlet property="countdown" destination="moi-y6-Jxu" id="bW8-LO-RPc"/>
                                     <outlet property="optionsButton" destination="LFv-Ub-Smn" id="OXE-7q-zxh"/>
                                     <outlet property="switchButton" destination="AOq-Xj-w4w" id="8za-tF-KYq"/>

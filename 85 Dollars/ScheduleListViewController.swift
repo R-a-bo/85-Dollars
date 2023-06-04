@@ -7,15 +7,27 @@
 
 import UIKit
 
-class ScheduleListViewController: UITableViewController {
+class ScheduleListViewController: UITableViewController, UICalendarViewDelegate {
+    
+    var calendarView: UICalendarView!
     
     var schedules = [Schedule]()
+    var activeSchedule = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // TODO: set up editing
         self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        calendarView = UICalendarView()
+        let gregorianCalendar = Calendar(identifier: .gregorian)
+        calendarView.calendar = gregorianCalendar
+        calendarView.translatesAutoresizingMaskIntoConstraints = false
+        calendarView.delegate = self
+        
+        // TODO: test code
+        schedules.append(Schedule(weekdays: [Weekday.monday], weeks: [Rotation.first, Rotation.second, Rotation.third, Rotation.fourth], name: "test"))
     }
 
     // MARK: - Table view data source
@@ -28,8 +40,14 @@ class ScheduleListViewController: UITableViewController {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "Schedule", for: indexPath) as? ScheduleListViewCell else {
             fatalError("Unable to dequeue ScheduleListViewCell.")
         }
-
-        // TODO: confgure cell
+        
+        let schedule = schedules[indexPath.row]
+        cell.switchButton.isOn = activeSchedule == indexPath.row
+        cell.countdown.text = String(schedule.daysUntilCleaning())
+        
+        if activeSchedule == indexPath.row {
+            setupCalendar(for: cell)
+        }
 
         return cell
     }
@@ -54,6 +72,33 @@ class ScheduleListViewController: UITableViewController {
 
     }
     */
+    
+    // MARK: - Utility methods
+    
+    func setupCalendar(for cell: ScheduleListViewCell) {
+        cell.calendarContainerView.addSubview(calendarView)
+        NSLayoutConstraint.activate([
+            calendarView.leadingAnchor.constraint(equalTo: cell.calendarContainerView.leadingAnchor),
+            calendarView.trailingAnchor.constraint(equalTo: cell.calendarContainerView.trailingAnchor),
+            calendarView.centerXAnchor.constraint(equalTo: cell.calendarContainerView.centerXAnchor),
+            calendarView.heightAnchor.constraint(equalTo: cell.calendarContainerView.heightAnchor),
+        ])
+    }
+    
+    // MARK: - UICalendarViewDelegate
+    
+    func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
+        let cleaningDays = schedules[activeSchedule].streetCleaningDays()
+        if cleaningDays.contains(dateComponents) {
+            return .customView {
+                let cleaningEmoji = UILabel()
+                cleaningEmoji.text = "🧹"
+                return cleaningEmoji
+            }
+        } else {
+            return nil
+        }
+    }
 
     /*
     // MARK: - Navigation

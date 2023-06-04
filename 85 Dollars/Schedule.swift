@@ -9,7 +9,6 @@ import UIKit
 
 struct Schedule {
     
-    var isActive: Bool
     var weekdays: Set<Weekday>
     var weeks: Set<Rotation>
     // TODO: make name into a computed property
@@ -18,6 +17,11 @@ struct Schedule {
     func daysUntilCleaning() -> Int {
         // TODO: fill in method
         return 0
+    }
+    
+    func streetCleaningDays() -> Set<DateComponents> {
+        // TODO: fill in method
+        return Set<DateComponents>()
     }
 
 }
