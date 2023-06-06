@@ -29,7 +29,7 @@
                                             <rect key="frame" x="20" y="10" width="85" height="201"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moi-y6-Jxu">
-                                                    <rect key="frame" x="37.333333333333336" y="143.66666666666666" width="10.333333333333336" height="21"/>
+                                                    <rect key="frame" x="37.666666666666664" y="143.66666666666666" width="10" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>

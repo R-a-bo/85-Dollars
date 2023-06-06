@@ -27,7 +27,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         calendarView.delegate = self
         
         // TODO: test code
-        schedules.append(Schedule(weekdays: [Weekday.monday], weeks: [Rotation.first, Rotation.second, Rotation.third, Rotation.fourth], name: "test"))
+        schedules.append(Schedule(weekdays: [Weekday.monday, Weekday.friday], weeks: [Rotation.first, Rotation.third]))
     }
 
     // MARK: - Table view data source
@@ -88,7 +88,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
     // MARK: - UICalendarViewDelegate
     
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-        let cleaningDays = schedules[activeSchedule].streetCleaningDays()
+        let cleaningDays = schedules[activeSchedule].streetCleaningDays(forMonthIncluding: dateComponents)
         if cleaningDays.contains(dateComponents) {
             return .customView {
                 let cleaningEmoji = UILabel()
