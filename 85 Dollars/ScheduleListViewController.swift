@@ -88,7 +88,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
     // MARK: - UICalendarViewDelegate
     
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-        let cleaningDays = schedules[activeSchedule].streetCleaningDays(forMonthIncluding: dateComponents)
+        let cleaningDays = schedules[activeSchedule].getCleaningDays(for: dateComponents.month!, of: dateComponents.year!)
         if cleaningDays.contains(dateComponents) {
             return .customView {
                 let cleaningEmoji = UILabel()
