@@ -43,7 +43,11 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         
         let schedule = schedules[indexPath.row]
         cell.switchButton.isOn = activeSchedule == indexPath.row
-        cell.countdown.text = String(schedule.daysUntilCleaning())
+        if let daysUntilCleaning = schedule.daysUntilCleaning() {
+            cell.countdown.text = String(daysUntilCleaning)
+        } else {
+            cell.countdown.text = "∞"
+        }
         
         if activeSchedule == indexPath.row {
             setupCalendar(for: cell)
