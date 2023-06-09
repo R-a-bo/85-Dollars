@@ -9,19 +9,21 @@ import UIKit
 
 class ScheduleDetailViewController: UITableViewController {
     
-    var schedule: Schedule
+    var schedule: Schedule!
     
-    init(schedule: Schedule = Schedule(weekdays: Set<Weekday>(), weeks: Set<Rotation>())) {
-        self.schedule = schedule
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required convenience init?(coder: NSCoder) {
-        self.init()
-    }
+//    init(schedule: Schedule = Schedule(weekdays: Set<Weekday>(), weeks: Set<Rotation>())) {
+//        self.schedule = schedule
+//        super.init(nibName: nil, bundle: nil)
+//    }
+//
+//    required convenience init?(coder: NSCoder) {
+//        self.init()
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        schedule = schedule ?? Schedule(weekdays: Set<Weekday>(), weeks: Set<Rotation>())
         
         navigationItem.rightBarButtonItem = editButtonItem
     }

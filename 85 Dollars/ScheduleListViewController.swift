@@ -17,8 +17,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // TODO: set up editing
-        self.navigationItem.rightBarButtonItem = self.editButtonItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         
         calendarView = UICalendarView()
         let gregorianCalendar = Calendar(identifier: .gregorian)
@@ -55,27 +54,6 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
 
         return cell
     }
-
-    /*
-    // Override to support editing the table view.
-    // TODO: set up editing
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-     // TODO:
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
     
     // MARK: - Utility methods
     
@@ -87,6 +65,10 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
             calendarView.centerXAnchor.constraint(equalTo: cell.calendarContainerView.centerXAnchor),
             calendarView.heightAnchor.constraint(equalTo: cell.calendarContainerView.heightAnchor),
         ])
+    }
+    
+    @objc func addButtonTapped() {
+        performSegue(withIdentifier: "scheduleDetailPopup", sender: navigationItem.rightBarButtonItem)
     }
     
     // MARK: - UICalendarViewDelegate
@@ -104,14 +86,10 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         }
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    */
 
 }

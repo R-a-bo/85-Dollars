@@ -119,10 +119,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="dUm-aQ-kyX"/>
+                    <connections>
+                        <segue destination="1ED-aL-KlH" kind="presentation" identifier="scheduleDetailPopup" id="SkV-W8-sHY"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZF0-nA-kOz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1067.9389312977098" y="-89.436619718309871"/>
+            <point key="canvasLocation" x="1091" y="-80"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Fjr-tL-1VD">
@@ -142,12 +145,12 @@
             </objects>
             <point key="canvasLocation" x="141.22137404580153" y="-89.436619718309871"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Schedule Detail View Controller-->
         <scene sceneID="Zek-Fo-gKt">
             <objects>
-                <tableViewController id="1ED-aL-KlH" sceneMemberID="viewController">
+                <tableViewController id="1ED-aL-KlH" customClass="ScheduleDetailViewController" customModule="_5_Dollars" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="aWF-OV-IsK">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
@@ -219,10 +222,11 @@
                             <outlet property="delegate" destination="1ED-aL-KlH" id="Efk-wi-3WQ"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="4eV-Rm-w8g"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K6P-vd-1Kd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="176" y="593"/>
+            <point key="canvasLocation" x="1946" y="-80"/>
         </scene>
     </scenes>
     <resources>
