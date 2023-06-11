@@ -26,7 +26,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         calendarView.delegate = self
         
         // TODO: test code
-        schedules.append(Schedule(weekdays: [Weekday.monday, Weekday.friday], weeks: [Rotation.first, Rotation.third]))
+        schedules.append(Schedule(weekdays: [Weekday.Monday, Weekday.Friday], weeks: [Rotation.First, Rotation.Third], alarms: [TimeInterval]()))
     }
 
     // MARK: - Table view data source
@@ -90,6 +90,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // TODO: give data when editing schedule
     }
 
 }

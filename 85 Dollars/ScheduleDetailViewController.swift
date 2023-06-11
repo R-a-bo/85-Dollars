@@ -11,21 +11,15 @@ class ScheduleDetailViewController: UITableViewController {
     
     var schedule: Schedule!
     
-//    init(schedule: Schedule = Schedule(weekdays: Set<Weekday>(), weeks: Set<Rotation>())) {
-//        self.schedule = schedule
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required convenience init?(coder: NSCoder) {
-//        self.init()
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        schedule = schedule ?? Schedule(weekdays: Set<Weekday>(), weeks: Set<Rotation>())
+        schedule = schedule ?? Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [TimeInterval]())
         
         navigationItem.rightBarButtonItem = editButtonItem
+        
+        // TODO: test code - delete
+        schedule = Schedule(weekdays: [Weekday.Monday, Weekday.Friday], weeks: [Rotation.First, Rotation.Third], alarms: [207360])
     }
 
     // MARK: - Table view data source
@@ -39,19 +33,38 @@ class ScheduleDetailViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // TODO: implement method
-        return 0
+        if section == 0 {
+            return schedule.weekdays.count + 1
+        } else {
+            return schedule.alarms.count + 1
+        }
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
+        var cell: UITableViewCell
+        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
+            if indexPath.section == 0 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "addWeekday", for: indexPath)
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "addAlarm", for: indexPath)
+            }
+        } else {
+            if indexPath.section == 0 {
+                cell = tableView.dequeueReusableCell(withIdentifier: "weekday", for: indexPath)
+                var content = cell.defaultContentConfiguration()
+                content.text = String(reflecting: schedule.weekdays[indexPath.row])
+                content.secondaryText = schedule.rotationStringRepresentation()
+                cell.contentConfiguration = content
+            } else {
+                cell = tableView.dequeueReusableCell(withIdentifier: "alarm", for: indexPath)
+                var content = cell.defaultContentConfiguration()
+                content.text = schedule.alarmStringRepresentation(for: indexPath.row)
+                cell.contentConfiguration = content
+            }
+        }
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.

@@ -9,8 +9,9 @@ import UIKit
 
 struct Schedule {
     
-    var weekdays: Set<Weekday>
-    var weeks: Set<Rotation>
+    var weekdays: [Weekday]
+    var weeks: [Rotation]
+    var alarms: [TimeInterval]
     var hourOfDay: Int?
     // TODO: make name into a computed property, integrate into UI
     var name: String?
@@ -73,12 +74,63 @@ struct Schedule {
         return dates
     }
     
+    func rotationStringRepresentation() -> String {
+        if weeks.count == 5 {
+            return "Every"
+        } else {
+            var rotationString = "of the month"
+            for (i, week) in weeks.enumerated().reversed() {
+                if i < weeks.count - 1 {
+                    rotationString = "\(week) and \(rotationString)"
+                } else {
+                    rotationString = "\(week) \(rotationString)"
+                }
+            }
+            return rotationString
+        }
+    }
+    
+    func alarmStringRepresentation(for alarm: Int) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .full
+        formatter.allowedUnits = [.day, .hour]
+        let result = formatter.string(from: alarms[alarm])
+        if let result = result {
+            return "\(result) before cleaning times"
+        } else {
+            print("Unable to generate string for alarm \(alarm) of \(alarms[alarm])")
+            return ""
+        }
+    }
+    
 }
 
-enum Weekday: Int {
-    case sunday = 1, monday, tuesday, wednesday, thursday, friday, saturday
+enum Weekday: Int, CustomStringConvertible {
+    case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
+    
+    var description: String {
+        switch self {
+        case .Sunday: return "Sunday"
+        case .Monday: return "Monday"
+        case .Tuesday: return "Tuesday"
+        case .Wednesday: return "Wednesday"
+        case .Thursday: return "Thursday"
+        case .Friday: return "Friday"
+        case .Saturday: return "Saturday"
+        }
+    }
 }
 
-enum Rotation: Int {
-    case first, second, third, fourth, fifth
+enum Rotation: Int, CustomStringConvertible {
+    case First, Second, Third, Fourth, Fifth
+    
+    var description: String {
+        switch self {
+        case .First: return "1st"
+        case .Second:  return "2nd"
+        case .Third:  return "3rd"
+        case .Fourth: return "4th"
+        case .Fifth:  return "5th"
+        }
+    }
 }
