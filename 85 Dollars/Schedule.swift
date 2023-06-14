@@ -74,20 +74,34 @@ struct Schedule {
         return dates
     }
     
+    func weekdaysStringRepresentation() -> String {
+        if weekdays.count == 7 {
+            return "Every day"
+        }
+        var result = ""
+        for (i, day) in weekdays.enumerated().reversed() {
+            if i < weekdays.count - 1 {
+                result = "\(day) and \(result)"
+            } else {
+                result = "\(day) \(result)"
+            }
+        }
+        return result
+    }
+    
     func rotationStringRepresentation() -> String {
         if weeks.count == 5 {
-            return "Every"
-        } else {
-            var rotationString = "of the month"
-            for (i, week) in weeks.enumerated().reversed() {
-                if i < weeks.count - 1 {
-                    rotationString = "\(week) and \(rotationString)"
-                } else {
-                    rotationString = "\(week) \(rotationString)"
-                }
-            }
-            return rotationString
+            return "Every week"
         }
+        var rotationString = "of the month"
+        for (i, week) in weeks.enumerated().reversed() {
+            if i < weeks.count - 1 {
+                rotationString = "\(week) and \(rotationString)"
+            } else {
+                rotationString = "\(week) \(rotationString)"
+            }
+        }
+        return rotationString
     }
     
     func alarmStringRepresentation(for alarm: Int) -> String {
@@ -105,7 +119,7 @@ struct Schedule {
     
 }
 
-enum Weekday: Int, CustomStringConvertible {
+enum Weekday: Int, CustomStringConvertible, Comparable {
     case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
     
     var description: String {
@@ -118,6 +132,10 @@ enum Weekday: Int, CustomStringConvertible {
         case .Friday: return "Friday"
         case .Saturday: return "Saturday"
         }
+    }
+    
+    static func < (lhs: Weekday, rhs: Weekday) -> Bool {
+        lhs.rawValue < rhs.rawValue
     }
 }
 
