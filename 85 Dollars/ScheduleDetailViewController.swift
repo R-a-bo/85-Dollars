@@ -10,16 +10,18 @@ import UIKit
 class ScheduleDetailViewController: UITableViewController {
     
     var schedule: Schedule!
+    var callback: ((_: Schedule) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         schedule = schedule ?? Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [TimeInterval]())
         
-        navigationItem.rightBarButtonItem = editButtonItem
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
         
         // TODO: test code - delete
-        schedule = Schedule(weekdays: [Weekday.Monday, Weekday.Friday], weeks: [Rotation.First, Rotation.Third], alarms: [207360])
+//        schedule = Schedule(weekdays: [Weekday.Monday, Weekday.Friday], weeks: [Rotation.First, Rotation.Third], alarms: [207360])
     }
 
     // MARK: - Table view data source
@@ -67,55 +69,67 @@ class ScheduleDetailViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if isAddAlarm(indexPath) {
+        if indexPath.section == 0 {
+            openRotationSelector()
+        } else if indexPath.section == 1 {
+            openWeekdaySelector()
+        } else if isAddAlarm(indexPath) {
             openTimeSelector(isExistingAlarm: false)
+            tableView.deselectRow(at: indexPath, animated: true)
         } else if indexPath.section == 2 {
             openTimeSelector(isExistingAlarm: true)
-        } else if isAddWeekday(indexPath) {
-            openWeekdaySelector(selectedWeekday: nil)
-        } 
+        }
     }
 
-    /*
-    // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+        if indexPath.section == 2 && indexPath.row != schedule.alarms.count {
+            return true
+        }
+        return false
     }
-    */
 
-    /*
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            schedule.alarms.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
-    */
     
     // MARK: - Utility functions
-    
-    // determines if the tableviewcell at the given indexpath is the "add weekday" button
-    func isAddWeekday(_ indexPath: IndexPath) -> Bool {
-        return indexPath.section == 1 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
-    }
     
     // determines if the tableviewcell at the given indexpath is the "add alarm" button
     func isAddAlarm(_ indexPath: IndexPath) -> Bool {
         return indexPath.section == 2 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
     }
     
-    func openTimeSelector(isExistingAlarm: Bool) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "AlarmDetail") as? AlarmDetailViewController {
-            if isExistingAlarm {
-                vc.title = "Edit alarm"
-            } else {
-                vc.title = "Create alarm"
+    func openRotationSelector() {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "RotationDetail") as? RotationDetailViewController {
+            vc.weeks = schedule.weeks
+            vc.callback = { [weak self] returnedRotation in
+                self?.schedule.weeks = returnedRotation
+                self?.tableView.reloadData()
             }
             navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func openWeekdaySelector() {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "WeekdayDetail") as? WeekdayDetailViewController {
+            vc.weekdays = schedule.weekdays
+            vc.callback = { [weak self] returnedWeekdays in
+                self?.schedule.weekdays = returnedWeekdays
+                self?.tableView.reloadData()
+            }
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    func openTimeSelector(isExistingAlarm: Bool) {
+        if isExistingAlarm, let vc = storyboard?.instantiateViewController(withIdentifier: "AlarmDetail") as? AlarmDetailViewController {
+            vc.title = "Edit alarm"
+            navigationController?.pushViewController(vc, animated: true)
+        } else {
+            performSegue(withIdentifier: "newAlarmPopup", sender: nil)
         }
     }
     
@@ -124,27 +138,27 @@ class ScheduleDetailViewController: UITableViewController {
         content.text = text
         cell.contentConfiguration = content
     }
-    
-    // selectedWeekday is the chosen weekday if this is being called to edit a weekday item
-    func openWeekdaySelector(selectedWeekday: Int?) {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "WeekdayDetail") as? WeekdayDetailViewController {
-            if let selectedWeekday = selectedWeekday {
-                //TODO: pass down to VC
-            } else {
-                //TODO: dont pass down to vc
-            }
-            navigationController?.pushViewController(vc, animated: true)
-        }
-    }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        if let nav = segue.destination as? UINavigationController, let vc = nav.topViewController as? AlarmDetailViewController, segue.identifier == "newAlarmPopup" {
+            vc.isPopup = true
+        }
     }
-    */
+    
+    @objc func doneButtonTapped() {
+        if let callback = callback {
+            callback(schedule)
+        } else {
+            print("Missing callback for schedule list")
+        }
+        dismiss(animated: true)
+    }
+    
+    @objc func cancelButtonTapped() {
+        dismiss(animated: true)
+    }
 
 }

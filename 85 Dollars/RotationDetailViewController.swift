@@ -1,5 +1,5 @@
 //
-//  WeekdayDetailViewController.swift
+//  RotationDetailViewController.swift
 //  85 Dollars
 //
 //  Created by George Birch on 6/13/23.
@@ -7,24 +7,24 @@
 
 import UIKit
 
-class WeekdayDetailViewController: UITableViewController {
+class RotationDetailViewController: UITableViewController {
     
-    var weekdays: [Weekday]!
-    var callback: ((_: [Weekday]) -> Void)?
+    var weeks: [Rotation]!
+    var callback: ((_: [Rotation]) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
         
-        if weekdays == nil {
-            weekdays = [Weekday]()
+        if weeks == nil {
+            weeks = [Rotation]()
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         if let callback = callback {
-            callback(weekdays)
+            callback(weeks)
         }
     }
 
@@ -35,23 +35,23 @@ class WeekdayDetailViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 5
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "weekday", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "rotation", for: indexPath)
 
         var content = cell.defaultContentConfiguration()
-        if indexPath.row == 7 {
-            content.text = "Every day"
-            if weekdays.count == 7 {
+        if indexPath.row == 4 {
+            content.text = "Every week"
+            if weeks.count == 5 {
                 cell.accessoryType = .checkmark
             }
         } else {
-            content.text = "\(Weekday(rawValue: indexPath.row + 1)!)"
+            content.text = "\(Rotation(rawValue: indexPath.row)!)"
         }
         cell.contentConfiguration = content
-        if let weekdays = weekdays, let day = Weekday(rawValue: indexPath.row + 1), weekdays.contains(day) {
+        if let weeks = weeks, let week = Rotation(rawValue: indexPath.row), weeks.contains(week) {
             cell.accessoryType = .checkmark
         }
 
@@ -62,21 +62,21 @@ class WeekdayDetailViewController: UITableViewController {
         let cell = tableView.cellForRow(at: indexPath)
         if cell?.accessoryType == .checkmark {
             cell?.accessoryType = .none
-            weekdays.removeAll() { day in
-                return day.rawValue - 1 == indexPath.row
+            weeks.removeAll() { week in
+                return week.rawValue == indexPath.row
             }
-            let finalCell = tableView.cellForRow(at: IndexPath(row: 7, section: indexPath.section))
+            let finalCell = tableView.cellForRow(at: IndexPath(row: 4, section: indexPath.section))
             finalCell?.accessoryType = .none
         } else {
             cell?.accessoryType = .checkmark
-            if indexPath.row == 7 {
-                for i in 0...6 {
+            if indexPath.row == 4 {
+                for i in 0...3 {
                     let otherCell = tableView.cellForRow(at: IndexPath(row: i, section: indexPath.section))
                     otherCell?.accessoryType = .checkmark
-                    addWeekday(i + 1)
+                    addWeek(i)
                 }
             } else {
-                addWeekday(indexPath.row + 1)
+                addWeek(indexPath.row)
             }
         }
         tableView.deselectRow(at: indexPath, animated: true)
@@ -84,14 +84,14 @@ class WeekdayDetailViewController: UITableViewController {
     
     // MARK: - utility functions
     
-    func addWeekday(_ i: Int) {
-        guard let day = Weekday(rawValue: i) else {
-            print("Error updating weekday list tableview")
+    func addWeek(_ i: Int) {
+        guard let week = Rotation(rawValue: i) else {
+            print("Error updating rotation list tableview")
             return
         }
-        if !weekdays.contains(day) {
-            weekdays.append(day)
-            weekdays.sort()
+        if !weeks.contains(week) {
+            weeks.append(week)
+            weeks.sort()
         }
     }
     

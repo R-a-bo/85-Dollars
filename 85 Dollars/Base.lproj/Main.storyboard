@@ -7,7 +7,6 @@
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
-        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -15,7 +14,7 @@
         <scene sceneID="5XI-m5-Dsu">
             <objects>
                 <tableViewController id="ph8-WH-BRw" customClass="ScheduleListViewController" customModule="_5_Dollars" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="eKx-tv-XJN">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="eKx-tv-XJN">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -74,12 +73,6 @@
                                                         <constraint firstAttribute="height" constant="22" id="gbF-wI-Inl"/>
                                                         <constraint firstAttribute="width" constant="25" id="lwq-1M-JDe"/>
                                                     </constraints>
-                                                    <menu key="menu" id="mE1-vg-hUa">
-                                                        <children>
-                                                            <command title="Item 1" id="vgr-cd-cQw"/>
-                                                            <command title="Item 2" id="vzk-kO-cSH"/>
-                                                        </children>
-                                                    </menu>
                                                     <state key="normal" title="Button">
                                                         <imageReference key="image" image="ellipsis" catalog="system" symbolScale="large"/>
                                                     </state>
@@ -179,7 +172,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add weekday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UmW-8u-efR">
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Add weekdays" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="UmW-8u-efR">
                                             <rect key="frame" x="59" y="0.0" width="314" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -238,6 +231,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="4eV-Rm-w8g"/>
+                    <connections>
+                        <segue destination="TCT-OX-SJQ" kind="presentation" identifier="newAlarmPopup" id="BVU-If-wCV"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K6P-vd-1Kd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -248,35 +244,48 @@
             <objects>
                 <viewController storyboardIdentifier="AlarmDetail" id="Ngd-UE-RkR" customClass="AlarmDetailViewController" customModule="_5_Dollars" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vdw-cb-aWH">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="10" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="o0R-Mi-L7x">
-                                <rect key="frame" x="0.0" y="59" width="393" height="216"/>
+                                <rect key="frame" x="0.0" y="56" width="393" height="216"/>
                             </datePicker>
                             <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qMu-rV-ky0">
-                                <rect key="frame" x="35" y="275" width="323" height="14"/>
+                                <rect key="frame" x="35" y="272" width="323" height="14"/>
                                 <buttonConfiguration key="configuration" style="gray"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWR-Jv-Ooc">
+                                <rect key="frame" x="35" y="753" width="323" height="30"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Delete alarm"/>
+                                <connections>
+                                    <action selector="deleteButtonTapped:" destination="Ngd-UE-RkR" eventType="touchUpInside" id="p83-EO-6Ec"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kAh-qf-lJc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="kAh-qf-lJc" firstAttribute="trailing" secondItem="qMu-rV-ky0" secondAttribute="trailing" constant="35" id="5hc-aQ-mEW"/>
+                            <constraint firstItem="kAh-qf-lJc" firstAttribute="trailing" secondItem="hWR-Jv-Ooc" secondAttribute="trailing" constant="35" id="Bul-qv-tUT"/>
                             <constraint firstItem="kAh-qf-lJc" firstAttribute="trailing" secondItem="o0R-Mi-L7x" secondAttribute="trailing" id="CCe-5E-z0l"/>
+                            <constraint firstItem="kAh-qf-lJc" firstAttribute="bottom" secondItem="hWR-Jv-Ooc" secondAttribute="bottom" id="EDQ-vw-T30"/>
                             <constraint firstItem="qMu-rV-ky0" firstAttribute="leading" secondItem="kAh-qf-lJc" secondAttribute="leading" constant="35" id="UMy-Jn-32y"/>
+                            <constraint firstItem="hWR-Jv-Ooc" firstAttribute="leading" secondItem="kAh-qf-lJc" secondAttribute="leading" constant="35" id="X0k-K1-gpf"/>
                             <constraint firstItem="qMu-rV-ky0" firstAttribute="top" secondItem="o0R-Mi-L7x" secondAttribute="bottom" id="gZi-Ih-ftl"/>
                             <constraint firstItem="o0R-Mi-L7x" firstAttribute="leading" secondItem="kAh-qf-lJc" secondAttribute="leading" id="iSy-Nn-4xl"/>
                             <constraint firstItem="o0R-Mi-L7x" firstAttribute="top" secondItem="kAh-qf-lJc" secondAttribute="top" id="kTj-bA-pPI"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="muc-el-4oI"/>
                     <connections>
                         <outlet property="daySelectionButton" destination="qMu-rV-ky0" id="jyT-Zy-XSJ"/>
+                        <outlet property="deleteButton" destination="hWR-Jv-Ooc" id="bE1-2M-Ire"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rw5-es-TSA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3647" y="567"/>
+            <point key="canvasLocation" x="4573.2824427480919" y="645.77464788732402"/>
         </scene>
         <!--Weekday Detail View Controller-->
         <scene sceneID="7NP-Hd-qxR">
@@ -303,7 +312,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t6L-Md-PBY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3647" y="-89"/>
+            <point key="canvasLocation" x="3647" y="-80"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1aL-jn-Yg1">
@@ -322,6 +331,51 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X5Q-eX-hLk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1945.8015267175572" y="-80.281690140845072"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dZ2-ZU-jsr">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TCT-OX-SJQ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Kad-ek-dG8">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Ngd-UE-RkR" kind="relationship" relationship="rootViewController" id="0yf-gD-nY5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MWF-PN-E5W" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3646.5648854961833" y="645.77464788732402"/>
+        </scene>
+        <!--Rotation Detail View Controller-->
+        <scene sceneID="cGs-FH-YbP">
+            <objects>
+                <tableViewController storyboardIdentifier="RotationDetail" id="lvy-gG-dzu" customClass="RotationDetailViewController" customModule="_5_Dollars" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="y9G-Hp-9IP">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="rotation" editingAccessoryType="checkmark" id="PnA-OK-N9u">
+                                <rect key="frame" x="20" y="55.333332061767578" width="353" height="43.666667938232422"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PnA-OK-N9u" id="9Re-nO-4IV">
+                                    <rect key="frame" x="0.0" y="0.0" width="353" height="43.666667938232422"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lvy-gG-dzu" id="pNP-DE-wAG"/>
+                            <outlet property="delegate" destination="lvy-gG-dzu" id="CJR-Ca-srb"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c0q-TL-BHt" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3647" y="-796"/>
         </scene>
     </scenes>
     <resources>

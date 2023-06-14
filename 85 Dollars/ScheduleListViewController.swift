@@ -51,6 +51,15 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         if activeSchedule == indexPath.row {
             setupCalendar(for: cell)
         }
+        
+        cell.optionsButton.menu = UIMenu(children: [
+            UIAction(title: "Edit", image: UIImage(systemName: "pencil")) { [weak self] _ in
+                self?.performSegue(withIdentifier: "scheduleDetailPopup", sender: indexPath.row)
+            },
+            UIAction(title: "Delete Schedule", image: UIImage(systemName: "trash")) { [weak self] _ in
+                self?.schedules.remove(at: indexPath.row)
+                self?.tableView.reloadData()
+            }])
 
         return cell
     }
@@ -88,9 +97,31 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
 
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // TODO: give data when editing schedule
+        guard let nav = segue.destination as? UINavigationController, let vc = nav.topViewController as? ScheduleDetailViewController else {
+            print("Error passing information to schedule detail view")
+            return
+        }
+        // check if we're editing an existing schedule
+        if let senderIndex = sender as? Int {
+            vc.schedule = schedules[senderIndex]
+            vc.callback = { [weak self] schedule in
+                self?.schedules[senderIndex] = schedule
+                self?.tableView.reloadData()
+                
+                // reload calendarview
+                let calendar = Calendar(identifier: .gregorian)
+                let thisMonthComponents = calendar.dateComponents([.month, .year], from: Date())
+                var currentMonthDates = [DateComponents]()
+                for i in 1...31 {
+                    currentMonthDates.append(DateComponents(calendar: calendar, era: 1, year: thisMonthComponents.year!, month: thisMonthComponents.month!, day: i))
+                }
+                self?.calendarView.reloadDecorations(forDateComponents: currentMonthDates, animated: true)
+            }
+            vc.title = "Edit cleaning schedule"
+        } else {
+            vc.title = "Create cleaning schedule"
+        }
     }
 
 }

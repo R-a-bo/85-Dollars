@@ -10,6 +10,7 @@ import UIKit
 class AlarmDetailViewController: UIViewController {
 
     @IBOutlet var daySelectionButton: UIButton!
+    @IBOutlet var deleteButton: UIButton!
     
     var numDays = 1
     let menuOptions = [
@@ -22,7 +23,8 @@ class AlarmDetailViewController: UIViewController {
         "6 days before cleaning",
         "1 week before cleaning"]
     
-    var callback: ((_: TimeInterval) -> Void)?
+    var callback: ((_: TimeInterval?) -> Void)?
+    var isPopup = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,15 +40,33 @@ class AlarmDetailViewController: UIViewController {
         daySelectionButton.menu = UIMenu(children: menuChildren)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(setAlarm))
+        if isPopup {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
+            deleteButton.isHidden = true
+        } else {
+            deleteButton.setTitleColor(.red, for: .normal)
+        }
     }
     
     @objc func setAlarm() {
         if let callback = callback {
-            // TODO: implement math to get alarm
+            //TODO: implement alarm math
         } else {
             print("No alarm detail callback specified")
         }
-        navigationController?.popViewController(animated: true)
+        if isPopup {
+            dismiss(animated: true)
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @objc func cancelButtonTapped() {
+        dismiss(animated: true)
     }
 
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        //TODO: delete alarm so that nil is returned
+        setAlarm()
+    }
 }

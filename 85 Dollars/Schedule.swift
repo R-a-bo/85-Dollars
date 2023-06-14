@@ -80,7 +80,9 @@ struct Schedule {
         }
         var result = ""
         for (i, day) in weekdays.enumerated().reversed() {
-            if i < weekdays.count - 1 {
+            if i < weekdays.count - 2 {
+                result = "\(day), \(result)"
+            } else if i == weekdays.count - 2 {
                 result = "\(day) and \(result)"
             } else {
                 result = "\(day) \(result)"
@@ -90,12 +92,14 @@ struct Schedule {
     }
     
     func rotationStringRepresentation() -> String {
-        if weeks.count == 5 {
+        if weeks.count == 4 {
             return "Every week"
         }
         var rotationString = "of the month"
         for (i, week) in weeks.enumerated().reversed() {
-            if i < weeks.count - 1 {
+            if i < weeks.count - 2 {
+                rotationString = "\(week), \(rotationString)"
+            } else if i == weeks.count - 2 {
                 rotationString = "\(week) and \(rotationString)"
             } else {
                 rotationString = "\(week) \(rotationString)"
@@ -139,7 +143,7 @@ enum Weekday: Int, CustomStringConvertible, Comparable {
     }
 }
 
-enum Rotation: Int, CustomStringConvertible {
+enum Rotation: Int, CustomStringConvertible, Comparable {
     case First, Second, Third, Fourth, Fifth
     
     var description: String {
@@ -150,5 +154,9 @@ enum Rotation: Int, CustomStringConvertible {
         case .Fourth: return "4th"
         case .Fifth:  return "5th"
         }
+    }
+    
+    static func < (lhs: Rotation, rhs: Rotation) -> Bool {
+        lhs.rawValue < rhs.rawValue
     }
 }
