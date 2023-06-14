@@ -77,7 +77,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
     }
     
     @objc func addButtonTapped() {
-        performSegue(withIdentifier: "scheduleDetailPopup", sender: navigationItem.rightBarButtonItem)
+        performSegue(withIdentifier: "scheduleDetailPopup", sender: schedules.count)
     }
     
     // MARK: - UICalendarViewDelegate
@@ -98,29 +98,33 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
     // MARK: - Navigation
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let nav = segue.destination as? UINavigationController, let vc = nav.topViewController as? ScheduleDetailViewController else {
+        guard let nav = segue.destination as? UINavigationController, let vc = nav.topViewController as? ScheduleDetailViewController, let scheduleIndex = sender as? Int else {
             print("Error passing information to schedule detail view")
             return
         }
-        // check if we're editing an existing schedule
-        if let senderIndex = sender as? Int {
-            vc.schedule = schedules[senderIndex]
-            vc.callback = { [weak self] schedule in
-                self?.schedules[senderIndex] = schedule
-                self?.tableView.reloadData()
-                
-                // reload calendarview
-                let calendar = Calendar(identifier: .gregorian)
-                let thisMonthComponents = calendar.dateComponents([.month, .year], from: Date())
-                var currentMonthDates = [DateComponents]()
-                for i in 1...31 {
-                    currentMonthDates.append(DateComponents(calendar: calendar, era: 1, year: thisMonthComponents.year!, month: thisMonthComponents.month!, day: i))
-                }
-                self?.calendarView.reloadDecorations(forDateComponents: currentMonthDates, animated: true)
-            }
-            vc.title = "Edit cleaning schedule"
-        } else {
+        
+        if scheduleIndex == schedules.count {
+            // new schedule
+            schedules.append(Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [TimeInterval]()))
             vc.title = "Create cleaning schedule"
+        } else {
+            // edit existing schedule
+            vc.title = "Edit cleaning schedule"
+        }
+        
+        vc.schedule = schedules[scheduleIndex]
+        vc.callback = { [weak self] schedule in
+            self?.schedules[scheduleIndex] = schedule
+            self?.tableView.reloadData()
+            
+            // reload calendarview
+            let calendar = Calendar(identifier: .gregorian)
+            let thisMonthComponents = calendar.dateComponents([.month, .year], from: Date())
+            var currentMonthDates = [DateComponents]()
+            for i in 1...31 {
+                currentMonthDates.append(DateComponents(calendar: calendar, era: 1, year: thisMonthComponents.year!, month: thisMonthComponents.month!, day: i))
+            }
+            self?.calendarView.reloadDecorations(forDateComponents: currentMonthDates, animated: true)
         }
     }
 
