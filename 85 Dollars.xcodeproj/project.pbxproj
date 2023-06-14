@@ -19,6 +19,7 @@
 		12679D9B2A2C2D140007E8D3 /* ScheduleListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12679D9A2A2C2D140007E8D3 /* ScheduleListViewCell.swift */; };
 		12679D9D2A2C3BD50007E8D3 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12679D9C2A2C3BD50007E8D3 /* Schedule.swift */; };
 		12B5366E2A329B9A002B6C22 /* ScheduleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5366D2A329B9A002B6C22 /* ScheduleDetailViewController.swift */; };
+		12B536E52A393A31002B6C22 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B536E42A393A31002B6C22 /* AlarmDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		12679D9A2A2C2D140007E8D3 /* ScheduleListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListViewCell.swift; sourceTree = "<group>"; };
 		12679D9C2A2C3BD50007E8D3 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		12B5366D2A329B9A002B6C22 /* ScheduleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailViewController.swift; sourceTree = "<group>"; };
+		12B536E42A393A31002B6C22 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlarmDetailViewController.swift; path = "85 Dollars/AlarmDetailViewController.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		121B47482A28699000E4E41D = {
 			isa = PBXGroup;
 			children = (
+				12B536E42A393A31002B6C22 /* AlarmDetailViewController.swift */,
 				121B47532A28699100E4E41D /* 85 Dollars */,
 				121B476A2A28699300E4E41D /* 85 DollarsTests */,
 				121B47742A28699300E4E41D /* 85 DollarsUITests */,
@@ -271,6 +274,7 @@
 				121B47852A28709F00E4E41D /* ScheduleListViewController.swift in Sources */,
 				12679D9B2A2C2D140007E8D3 /* ScheduleListViewCell.swift in Sources */,
 				121B47552A28699100E4E41D /* AppDelegate.swift in Sources */,
+				12B536E52A393A31002B6C22 /* AlarmDetailViewController.swift in Sources */,
 				12679D9D2A2C3BD50007E8D3 /* Schedule.swift in Sources */,
 				121B47572A28699100E4E41D /* SceneDelegate.swift in Sources */,
 			);

@@ -42,28 +42,30 @@ class ScheduleDetailViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell
-        if indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1 {
-            if indexPath.section == 0 {
-                cell = tableView.dequeueReusableCell(withIdentifier: "addWeekday", for: indexPath)
-            } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "addAlarm", for: indexPath)
-            }
+        if isAddWeekday(indexPath) {
+            cell = tableView.dequeueReusableCell(withIdentifier: "addWeekday", for: indexPath)
+        } else if isAddAlarm(indexPath) {
+            cell = tableView.dequeueReusableCell(withIdentifier: "addAlarm", for: indexPath)
+        } else if indexPath.section == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "weekday", for: indexPath)
+            var content = cell.defaultContentConfiguration()
+            content.text = String(reflecting: schedule.weekdays[indexPath.row])
+            content.secondaryText = schedule.rotationStringRepresentation()
+            cell.contentConfiguration = content
         } else {
-            if indexPath.section == 0 {
-                cell = tableView.dequeueReusableCell(withIdentifier: "weekday", for: indexPath)
-                var content = cell.defaultContentConfiguration()
-                content.text = String(reflecting: schedule.weekdays[indexPath.row])
-                content.secondaryText = schedule.rotationStringRepresentation()
-                cell.contentConfiguration = content
-            } else {
-                cell = tableView.dequeueReusableCell(withIdentifier: "alarm", for: indexPath)
-                var content = cell.defaultContentConfiguration()
-                content.text = schedule.alarmStringRepresentation(for: indexPath.row)
-                cell.contentConfiguration = content
-            }
+            cell = tableView.dequeueReusableCell(withIdentifier: "alarm", for: indexPath)
+            var content = cell.defaultContentConfiguration()
+            content.text = schedule.alarmStringRepresentation(for: indexPath.row)
+            cell.contentConfiguration = content
         }
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if isAddAlarm(indexPath) {
+            openTimeSelector(isExistingAlarm: false)
+        }
     }
 
     /*
@@ -85,6 +87,29 @@ class ScheduleDetailViewController: UITableViewController {
         }    
     }
     */
+    
+    // MARK: - Utility functions
+    
+    // determines if the tableviewcell at the given indexpath is the "add weekday" button
+    func isAddWeekday(_ indexPath: IndexPath) -> Bool {
+        return indexPath.section == 0 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
+    }
+    
+    // determines if the tableviewcell at the given indexpath is the "add alarm" button
+    func isAddAlarm(_ indexPath: IndexPath) -> Bool {
+        return indexPath.section == 1 && indexPath.row == tableView.numberOfRows(inSection: indexPath.section) - 1
+    }
+    
+    func openTimeSelector(isExistingAlarm: Bool) {
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "AlarmDetail") as? AlarmDetailViewController {
+            if isExistingAlarm {
+                vc.title = "Edit alarm"
+            } else {
+                vc.title = "Create alarm"
+            }
+            navigationController?.pushViewController(vc, animated: true)
+        }
+    }
 
     /*
     // MARK: - Navigation

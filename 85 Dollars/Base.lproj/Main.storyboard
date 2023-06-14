@@ -248,12 +248,12 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K6P-vd-1Kd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2872.5190839694656" y="-80.281690140845072"/>
+            <point key="canvasLocation" x="2766" y="-89"/>
         </scene>
-        <!--View Controller-->
+        <!--Alarm Detail View Controller-->
         <scene sceneID="bp7-ag-9Nk">
             <objects>
-                <viewController id="Ngd-UE-RkR" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AlarmDetail" id="Ngd-UE-RkR" customClass="AlarmDetailViewController" customModule="_5_Dollars" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vdw-cb-aWH">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -261,19 +261,29 @@
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="10" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="o0R-Mi-L7x">
                                 <rect key="frame" x="0.0" y="59" width="393" height="216"/>
                             </datePicker>
+                            <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" changesSelectionAsPrimaryAction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qMu-rV-ky0">
+                                <rect key="frame" x="35" y="275" width="323" height="14"/>
+                                <buttonConfiguration key="configuration" style="gray"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="kAh-qf-lJc"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="kAh-qf-lJc" firstAttribute="trailing" secondItem="qMu-rV-ky0" secondAttribute="trailing" constant="35" id="5hc-aQ-mEW"/>
                             <constraint firstItem="kAh-qf-lJc" firstAttribute="trailing" secondItem="o0R-Mi-L7x" secondAttribute="trailing" id="CCe-5E-z0l"/>
+                            <constraint firstItem="qMu-rV-ky0" firstAttribute="leading" secondItem="kAh-qf-lJc" secondAttribute="leading" constant="35" id="UMy-Jn-32y"/>
+                            <constraint firstItem="qMu-rV-ky0" firstAttribute="top" secondItem="o0R-Mi-L7x" secondAttribute="bottom" id="gZi-Ih-ftl"/>
                             <constraint firstItem="o0R-Mi-L7x" firstAttribute="leading" secondItem="kAh-qf-lJc" secondAttribute="leading" id="iSy-Nn-4xl"/>
                             <constraint firstItem="o0R-Mi-L7x" firstAttribute="top" secondItem="kAh-qf-lJc" secondAttribute="top" id="kTj-bA-pPI"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="daySelectionButton" destination="qMu-rV-ky0" id="jyT-Zy-XSJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rw5-es-TSA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3747.3282442748091" y="118.30985915492958"/>
+            <point key="canvasLocation" x="3679" y="226"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="1aL-jn-Yg1">
