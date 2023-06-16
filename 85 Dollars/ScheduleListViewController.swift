@@ -42,6 +42,10 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         
         let schedule = schedules[indexPath.row]
         cell.switchButton.isOn = activeSchedule == indexPath.row
+        cell.switchCallback = { [weak self] in
+            self?.switchToggled(in: cell)
+        }
+        
         if let daysUntilCleaning = schedule.daysUntilCleaning() {
             cell.countdown.text = String(daysUntilCleaning)
         } else {
@@ -49,6 +53,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         }
         
         if activeSchedule == indexPath.row {
+            cell.scheduleText.isHidden = true
             setupCalendar(for: cell)
         }
         
@@ -76,8 +81,40 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         ])
     }
     
+    func refreshCalendar() {
+        let calendar = Calendar(identifier: .gregorian)
+        let thisMonthComponents = calendar.dateComponents([.month, .year], from: Date())
+        var currentMonthDates = [DateComponents]()
+        for i in 1...31 {
+            currentMonthDates.append(DateComponents(calendar: calendar, era: 1, year: thisMonthComponents.year!, month: thisMonthComponents.month!, day: i))
+        }
+        calendarView.reloadDecorations(forDateComponents: currentMonthDates, animated: true)
+    }
+    
     @objc func addButtonTapped() {
         performSegue(withIdentifier: "scheduleDetailPopup", sender: schedules.count)
+    }
+    
+    func switchToggled(in cell: ScheduleListViewCell) {
+        tableView.beginUpdates()
+        calendarView.removeFromSuperview()
+        if cell.switchButton.isOn {
+            cell.scheduleText.isHidden = true
+            setupCalendar(for: cell)
+            
+            let activeCell = tableView.cellForRow(at: IndexPath(row: activeSchedule, section: 0))
+            guard let activeCell = activeCell as? ScheduleListViewCell else { return }
+            activeCell.switchButton.setOn(false, animated: true)
+            activeCell.scheduleText.isHidden = false
+            
+            guard let indexOfCurrentCell = tableView.indexPath(for: cell) else { return }
+            
+            activeSchedule = indexOfCurrentCell.row
+            refreshCalendar()
+        } else {
+            cell.scheduleText.isHidden = false
+        }
+        tableView.endUpdates()
     }
     
     // MARK: - UICalendarViewDelegate
@@ -115,16 +152,10 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         vc.schedule = schedules[scheduleIndex]
         vc.callback = { [weak self] schedule in
             self?.schedules[scheduleIndex] = schedule
-            self?.tableView.reloadData()
-            
-            // reload calendarview
-            let calendar = Calendar(identifier: .gregorian)
-            let thisMonthComponents = calendar.dateComponents([.month, .year], from: Date())
-            var currentMonthDates = [DateComponents]()
-            for i in 1...31 {
-                currentMonthDates.append(DateComponents(calendar: calendar, era: 1, year: thisMonthComponents.year!, month: thisMonthComponents.month!, day: i))
-            }
-            self?.calendarView.reloadDecorations(forDateComponents: currentMonthDates, animated: true)
+            self?.tableView.insertRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .bottom)
+            guard let newCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
+            newCell.switchButton.setOn(true, animated: true)
+            self?.switchToggled(in: newCell)
         }
     }
 

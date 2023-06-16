@@ -13,5 +13,15 @@ class ScheduleListViewCell: UITableViewCell {
     @IBOutlet var countdown: UILabel!
     @IBOutlet var calendarContainerView: UIView!
     @IBOutlet var optionsButton: UIButton!
+    @IBOutlet var scheduleText: UILabel!
+    
+    var switchCallback: (() -> Void)?
 
+    @IBAction func switchTapped() {
+        guard let switchCallback = switchCallback else {
+            print("missing switch callback in schedulelisttableviewcell")
+            return
+        }
+        switchCallback()
+    }
 }
