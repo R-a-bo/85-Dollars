@@ -26,7 +26,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         calendarView.delegate = self
         
         // TODO: test code
-        schedules.append(Schedule(weekdays: [Weekday.Monday, Weekday.Friday], weeks: [Rotation.First, Rotation.Third], alarms: [TimeInterval]()))
+        schedules.append(Schedule(weekdays: [Weekday.Sunday, Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Saturday], weeks: [Rotation.First, Rotation.Second, Rotation.Third], alarms: [TimeInterval]()))
     }
 
     // MARK: - Table view data source
@@ -53,7 +53,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         }
         
         if activeSchedule == indexPath.row {
-            cell.scheduleText.isHidden = true
+            cell.scheduleLabel.isHidden = true
             setupCalendar(for: cell)
         }
         
@@ -65,6 +65,8 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
                 self?.schedules.remove(at: indexPath.row)
                 self?.tableView.reloadData()
             }])
+        
+        refreshCellTitle(cell)
 
         return cell
     }
@@ -99,22 +101,30 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         tableView.beginUpdates()
         calendarView.removeFromSuperview()
         if cell.switchButton.isOn {
-            cell.scheduleText.isHidden = true
+            cell.scheduleLabel.isHidden = true
             setupCalendar(for: cell)
             
-            let activeCell = tableView.cellForRow(at: IndexPath(row: activeSchedule, section: 0))
-            guard let activeCell = activeCell as? ScheduleListViewCell else { return }
-            activeCell.switchButton.setOn(false, animated: true)
-            activeCell.scheduleText.isHidden = false
+            if let activeCell = tableView.cellForRow(at: IndexPath(row: activeSchedule, section: 0)) as? ScheduleListViewCell {
+                activeCell.switchButton.setOn(false, animated: true)
+                activeCell.scheduleLabel.isHidden = false
+                refreshCellTitle(activeCell)
+            }
             
             guard let indexOfCurrentCell = tableView.indexPath(for: cell) else { return }
             
             activeSchedule = indexOfCurrentCell.row
             refreshCalendar()
         } else {
-            cell.scheduleText.isHidden = false
+            cell.scheduleLabel.isHidden = false
+            refreshCellTitle(cell)
+            activeSchedule = -1
         }
         tableView.endUpdates()
+    }
+    
+    func refreshCellTitle(_ cell: ScheduleListViewCell) {
+        guard let scheduleIndex = tableView.indexPath(for: cell)?.row else { return }
+        cell.scheduleLabel.attributedText = schedules[scheduleIndex].scheduleTitle()
     }
     
     // MARK: - UICalendarViewDelegate
@@ -144,19 +154,25 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
             // new schedule
             schedules.append(Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [TimeInterval]()))
             vc.title = "Create cleaning schedule"
+            vc.callback = { [weak self] schedule in
+                self?.schedules[scheduleIndex] = schedule
+                self?.tableView.insertRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .bottom)
+                guard let newCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
+                newCell.switchButton.setOn(true, animated: true)
+                self?.switchToggled(in: newCell)
+            }
         } else {
             // edit existing schedule
             vc.title = "Edit cleaning schedule"
+            vc.callback = { [weak self] schedule in
+                self?.schedules[scheduleIndex] = schedule
+                self?.refreshCalendar()
+                guard let editedCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
+                self?.refreshCellTitle(editedCell)
+            }
         }
         
         vc.schedule = schedules[scheduleIndex]
-        vc.callback = { [weak self] schedule in
-            self?.schedules[scheduleIndex] = schedule
-            self?.tableView.insertRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .bottom)
-            guard let newCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
-            newCell.switchButton.setOn(true, animated: true)
-            self?.switchToggled(in: newCell)
-        }
     }
 
 }

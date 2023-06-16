@@ -74,18 +74,19 @@ struct Schedule {
         return dates
     }
     
-    func weekdaysStringRepresentation() -> String {
+    func weekdaysStringRepresentation(isTruncated: Bool) -> String {
         if weekdays.count == 7 {
             return "Every day"
         }
         var result = ""
         for (i, day) in weekdays.enumerated().reversed() {
+            let dayString = isTruncated ? day.truncated() : "\(day)"
             if i < weekdays.count - 2 {
-                result = "\(day), \(result)"
+                result = "\(dayString), \(result)"
             } else if i == weekdays.count - 2 {
-                result = "\(day) and \(result)"
+                result = "\(dayString) and \(result)"
             } else {
-                result = "\(day) \(result)"
+                result = "\(dayString) \(result)"
             }
         }
         return result
@@ -121,6 +122,14 @@ struct Schedule {
         }
     }
     
+    func scheduleTitle() -> NSMutableAttributedString {
+        let weekdaysText = weekdaysStringRepresentation(isTruncated: true)
+        let rotationText = rotationStringRepresentation()
+        let scheduleText = NSMutableAttributedString.init(string: "\(weekdaysText)\n\(rotationText)")
+        scheduleText.setAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)], range: NSMakeRange(0, weekdaysText.count))
+        return scheduleText
+    }
+    
 }
 
 enum Weekday: Int, CustomStringConvertible, Comparable {
@@ -136,6 +145,10 @@ enum Weekday: Int, CustomStringConvertible, Comparable {
         case .Friday: return "Friday"
         case .Saturday: return "Saturday"
         }
+    }
+    
+    func truncated() -> String {
+        return String("\(self)".prefix(3))
     }
     
     static func < (lhs: Weekday, rhs: Weekday) -> Bool {

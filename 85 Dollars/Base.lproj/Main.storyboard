@@ -63,9 +63,9 @@
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Aad-ET-BaK">
                                             <rect key="frame" x="105" y="10" width="238" height="201"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="scheduleText" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCh-h1-I1F">
-                                                    <rect key="frame" x="62" y="40" width="114" height="121"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="scheduleText" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCh-h1-I1F">
+                                                    <rect key="frame" x="63.999999999999993" y="40" width="110.33333333333331" height="121"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -117,7 +117,7 @@
                                     <outlet property="calendarContainerView" destination="Aad-ET-BaK" id="Jfn-yu-vUQ"/>
                                     <outlet property="countdown" destination="moi-y6-Jxu" id="bW8-LO-RPc"/>
                                     <outlet property="optionsButton" destination="LFv-Ub-Smn" id="OXE-7q-zxh"/>
-                                    <outlet property="scheduleText" destination="tCh-h1-I1F" id="OtB-zj-1hh"/>
+                                    <outlet property="scheduleLabel" destination="tCh-h1-I1F" id="eXj-Zd-HzE"/>
                                     <outlet property="switchButton" destination="AOq-Xj-w4w" id="8za-tF-KYq"/>
                                 </connections>
                             </tableViewCell>

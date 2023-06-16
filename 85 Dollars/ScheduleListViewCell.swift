@@ -13,7 +13,7 @@ class ScheduleListViewCell: UITableViewCell {
     @IBOutlet var countdown: UILabel!
     @IBOutlet var calendarContainerView: UIView!
     @IBOutlet var optionsButton: UIButton!
-    @IBOutlet var scheduleText: UILabel!
+    @IBOutlet var scheduleLabel: UILabel!
     
     var switchCallback: (() -> Void)?
 
