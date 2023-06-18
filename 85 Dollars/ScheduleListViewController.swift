@@ -16,6 +16,11 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadSchedules()
+        
+        let userDefaults = UserDefaults.standard
+        activeSchedule = userDefaults.object(forKey: "activeSchedule") as? Int ?? 0
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         
@@ -26,7 +31,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         calendarView.delegate = self
         
         // TODO: test code
-        schedules.append(Schedule(weekdays: [Weekday.Sunday, Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Saturday], weeks: [Rotation.First, Rotation.Second, Rotation.Third], alarms: [TimeInterval]()))
+//        schedules.append(Schedule(weekdays: [Weekday.Sunday, Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Saturday], weeks: [Rotation.First, Rotation.Second, Rotation.Third], alarms: [TimeInterval]()))
     }
 
     // MARK: - Table view data source
@@ -57,6 +62,9 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
             setupCalendar(for: cell)
         }
         
+        //TODO: testing
+        cell.scheduleLabel.adjustsFontSizeToFitWidth = true
+        
         cell.optionsButton.menu = UIMenu(children: [
             UIAction(title: "Edit", image: UIImage(systemName: "pencil")) { [weak self] _ in
                 self?.performSegue(withIdentifier: "scheduleDetailPopup", sender: indexPath.row)
@@ -66,7 +74,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
                 self?.tableView.reloadData()
             }])
         
-        refreshCellTitle(cell)
+        cell.scheduleLabel.attributedText = schedules[indexPath.row].scheduleTitle()
 
         return cell
     }
@@ -113,18 +121,46 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
             guard let indexOfCurrentCell = tableView.indexPath(for: cell) else { return }
             
             activeSchedule = indexOfCurrentCell.row
+            
             refreshCalendar()
         } else {
             cell.scheduleLabel.isHidden = false
             refreshCellTitle(cell)
             activeSchedule = -1
         }
+        let userDefaults = UserDefaults.standard
+        userDefaults.set(activeSchedule, forKey: "activeSchedule")
+        
         tableView.endUpdates()
     }
     
     func refreshCellTitle(_ cell: ScheduleListViewCell) {
         guard let scheduleIndex = tableView.indexPath(for: cell)?.row else { return }
         cell.scheduleLabel.attributedText = schedules[scheduleIndex].scheduleTitle()
+    }
+    
+    func saveSchedules() {
+        do {
+            let fileURL = try FileManager.default
+                .url(for: .applicationSupportDirectory, in : .userDomainMask, appropriateFor: nil, create: true)
+                .appending(path: "Schedules.plist")
+            let data = try PropertyListEncoder().encode(schedules)
+            try data.write(to: fileURL)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func loadSchedules() {
+        do {
+            let fileURL = try FileManager.default
+                .url(for: .applicationSupportDirectory, in : .userDomainMask, appropriateFor: nil, create: true)
+                .appending(path: "Schedules.plist")
+            let data = try Data(contentsOf: fileURL)
+            schedules = try PropertyListDecoder().decode([Schedule].self, from: data)
+        } catch {
+            print(error)
+        }
     }
     
     // MARK: - UICalendarViewDelegate
@@ -155,20 +191,26 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
             schedules.append(Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [TimeInterval]()))
             vc.title = "Create cleaning schedule"
             vc.callback = { [weak self] schedule in
-                self?.schedules[scheduleIndex] = schedule
-                self?.tableView.insertRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .bottom)
-                guard let newCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
-                newCell.switchButton.setOn(true, animated: true)
-                self?.switchToggled(in: newCell)
+                if schedule.weekdays.count > 0 && schedule.weeks.count > 0 {
+                    self?.schedules[scheduleIndex] = schedule
+                    self?.tableView.insertRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .bottom)
+                    guard let newCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
+                    newCell.switchButton.setOn(true, animated: true)
+                    self?.switchToggled(in: newCell)
+                    self?.saveSchedules()
+                }
             }
         } else {
             // edit existing schedule
             vc.title = "Edit cleaning schedule"
             vc.callback = { [weak self] schedule in
-                self?.schedules[scheduleIndex] = schedule
-                self?.refreshCalendar()
-                guard let editedCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
-                self?.refreshCellTitle(editedCell)
+                if schedule.weekdays.count > 0 && schedule.weeks.count > 0 {
+                    self?.schedules[scheduleIndex] = schedule
+                    self?.refreshCalendar()
+                    guard let editedCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
+                    self?.refreshCellTitle(editedCell)
+                    self?.saveSchedules()
+                }
             }
         }
         

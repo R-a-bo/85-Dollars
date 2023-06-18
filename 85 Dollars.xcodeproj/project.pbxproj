@@ -22,6 +22,7 @@
 		12B536E52A393A31002B6C22 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B536E42A393A31002B6C22 /* AlarmDetailViewController.swift */; };
 		12B536E72A39532F002B6C22 /* WeekdayDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B536E62A39532F002B6C22 /* WeekdayDetailViewController.swift */; };
 		12B536E92A3986C9002B6C22 /* RotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B536E82A3986C9002B6C22 /* RotationDetailViewController.swift */; };
+		12DB42852A3EBE92005C263E /* Schedules.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12DB42842A3EBE92005C263E /* Schedules.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,7 +61,8 @@
 		12B5366D2A329B9A002B6C22 /* ScheduleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailViewController.swift; sourceTree = "<group>"; };
 		12B536E42A393A31002B6C22 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailViewController.swift; sourceTree = "<group>"; };
 		12B536E62A39532F002B6C22 /* WeekdayDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayDetailViewController.swift; sourceTree = "<group>"; };
-		12B536E82A3986C9002B6C22 /* RotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RotationDetailViewController.swift; path = "85 Dollars/RotationDetailViewController.swift"; sourceTree = "<group>"; };
+		12B536E82A3986C9002B6C22 /* RotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationDetailViewController.swift; sourceTree = "<group>"; };
+		12DB42842A3EBE92005C263E /* Schedules.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Schedules.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,7 +93,6 @@
 		121B47482A28699000E4E41D = {
 			isa = PBXGroup;
 			children = (
-				12B536E82A3986C9002B6C22 /* RotationDetailViewController.swift */,
 				121B47532A28699100E4E41D /* 85 Dollars */,
 				121B476A2A28699300E4E41D /* 85 DollarsTests */,
 				121B47742A28699300E4E41D /* 85 DollarsUITests */,
@@ -112,12 +113,14 @@
 		121B47532A28699100E4E41D /* 85 Dollars */ = {
 			isa = PBXGroup;
 			children = (
+				12B536E82A3986C9002B6C22 /* RotationDetailViewController.swift */,
 				12B536E42A393A31002B6C22 /* AlarmDetailViewController.swift */,
 				121B47542A28699100E4E41D /* AppDelegate.swift */,
 				121B47562A28699100E4E41D /* SceneDelegate.swift */,
 				121B475A2A28699100E4E41D /* Main.storyboard */,
 				12B536E62A39532F002B6C22 /* WeekdayDetailViewController.swift */,
 				121B47842A28709F00E4E41D /* ScheduleListViewController.swift */,
+				12DB42842A3EBE92005C263E /* Schedules.plist */,
 				12679D9C2A2C3BD50007E8D3 /* Schedule.swift */,
 				12B5366D2A329B9A002B6C22 /* ScheduleDetailViewController.swift */,
 				12679D9A2A2C2D140007E8D3 /* ScheduleListViewCell.swift */,
@@ -250,6 +253,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				121B47612A28699200E4E41D /* LaunchScreen.storyboard in Resources */,
+				12DB42852A3EBE92005C263E /* Schedules.plist in Resources */,
 				121B475E2A28699200E4E41D /* Assets.xcassets in Resources */,
 				121B475C2A28699100E4E41D /* Main.storyboard in Resources */,
 			);

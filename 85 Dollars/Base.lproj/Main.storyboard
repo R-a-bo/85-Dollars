@@ -64,7 +64,7 @@
                                             <rect key="frame" x="105" y="10" width="238" height="201"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="scheduleText" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tCh-h1-I1F">
-                                                    <rect key="frame" x="63.999999999999993" y="40" width="110.33333333333331" height="121"/>
+                                                    <rect key="frame" x="0.0" y="40" width="238" height="121"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -72,6 +72,7 @@
                                             </subviews>
                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                             <constraints>
+                                                <constraint firstItem="tCh-h1-I1F" firstAttribute="leading" secondItem="Aad-ET-BaK" secondAttribute="leading" id="U0M-BJ-mUb"/>
                                                 <constraint firstItem="tCh-h1-I1F" firstAttribute="centerX" secondItem="Aad-ET-BaK" secondAttribute="centerX" id="mF4-F0-ioD"/>
                                                 <constraint firstItem="tCh-h1-I1F" firstAttribute="centerY" secondItem="Aad-ET-BaK" secondAttribute="centerY" id="nn7-LV-AZM"/>
                                                 <constraint firstItem="tCh-h1-I1F" firstAttribute="top" secondItem="Aad-ET-BaK" secondAttribute="top" constant="40" id="oww-ey-WUC"/>

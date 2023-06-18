@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Schedule {
+struct Schedule: Codable {
     
     var weekdays: [Weekday]
     var weeks: [Rotation]
@@ -132,7 +132,7 @@ struct Schedule {
     
 }
 
-enum Weekday: Int, CustomStringConvertible, Comparable {
+enum Weekday: Int, CustomStringConvertible, Comparable, Codable {
     case Sunday = 1, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday
     
     var description: String {
@@ -156,7 +156,7 @@ enum Weekday: Int, CustomStringConvertible, Comparable {
     }
 }
 
-enum Rotation: Int, CustomStringConvertible, Comparable {
+enum Rotation: Int, CustomStringConvertible, Comparable, Codable {
     case First, Second, Third, Fourth, Fifth
     
     var description: String {
