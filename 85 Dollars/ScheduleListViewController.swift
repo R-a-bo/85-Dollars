@@ -29,9 +29,6 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         calendarView.calendar = gregorianCalendar
         calendarView.translatesAutoresizingMaskIntoConstraints = false
         calendarView.delegate = self
-        
-        // TODO: test code
-//        schedules.append(Schedule(weekdays: [Weekday.Sunday, Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Saturday], weeks: [Rotation.First, Rotation.Second, Rotation.Third], alarms: [TimeInterval]()))
     }
 
     // MARK: - Table view data source
@@ -60,10 +57,11 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         if activeSchedule == indexPath.row {
             cell.scheduleLabel.isHidden = true
             setupCalendar(for: cell)
+            setAlarms(for: schedule)
         }
         
-        //TODO: testing
         cell.scheduleLabel.adjustsFontSizeToFitWidth = true
+        cell.countdownLabel.adjustsFontSizeToFitWidth = true
         
         cell.optionsButton.menu = UIMenu(children: [
             UIAction(title: "Edit", image: UIImage(systemName: "pencil")) { [weak self] _ in
@@ -71,7 +69,8 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
             },
             UIAction(title: "Delete Schedule", image: UIImage(systemName: "trash")) { [weak self] _ in
                 self?.schedules.remove(at: indexPath.row)
-                self?.tableView.reloadData()
+                self?.tableView.deleteRows(at: [indexPath], with: .automatic)
+                self?.saveSchedules()
             }])
         
         cell.scheduleLabel.attributedText = schedules[indexPath.row].scheduleTitle()
@@ -123,6 +122,8 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
             activeSchedule = indexOfCurrentCell.row
             
             refreshCalendar()
+            
+            setAlarms(for: schedules[activeSchedule])
         } else {
             cell.scheduleLabel.isHidden = false
             refreshCellTitle(cell)
@@ -163,6 +164,13 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         }
     }
     
+    func setAlarms(for schedule: Schedule) {
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
+        
+        schedule.setAlarms()
+    }
+    
     // MARK: - UICalendarViewDelegate
     
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
@@ -188,7 +196,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         
         if scheduleIndex == schedules.count {
             // new schedule
-            schedules.append(Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [TimeInterval]()))
+            schedules.append(Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [Alarm]()))
             vc.title = "Create cleaning schedule"
             vc.callback = { [weak self] schedule in
                 if schedule.weekdays.count > 0 && schedule.weeks.count > 0 {
@@ -196,6 +204,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
                     self?.tableView.insertRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .bottom)
                     guard let newCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
                     newCell.switchButton.setOn(true, animated: true)
+                    self?.setAlarms(for: schedule)
                     self?.switchToggled(in: newCell)
                     self?.saveSchedules()
                 }

@@ -15,7 +15,7 @@ class ScheduleDetailViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        schedule = schedule ?? Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [TimeInterval]())
+        schedule = schedule ?? Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [Alarm]())
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
@@ -61,7 +61,7 @@ class ScheduleDetailViewController: UITableViewController {
             } else if indexPath.section == 1 {
                 setCellText(cell, to: schedule.weekdaysStringRepresentation(isTruncated: false))
             } else {
-                setCellText(cell, to: schedule.alarmStringRepresentation(for: indexPath.row))
+                setCellText(cell, to: schedule.alarmStringRepresentation(for: schedule.alarms[indexPath.row]))
             }
         }
 
@@ -74,10 +74,10 @@ class ScheduleDetailViewController: UITableViewController {
         } else if indexPath.section == 1 {
             openWeekdaySelector()
         } else if isAddAlarm(indexPath) {
-            openTimeSelector(isExistingAlarm: false)
+            openTimeSelector(forAlarmAt: tableView.numberOfRows(inSection: 2))
             tableView.deselectRow(at: indexPath, animated: true)
         } else if indexPath.section == 2 {
-            openTimeSelector(isExistingAlarm: true)
+            openTimeSelector(forAlarmAt: indexPath.row)
         }
     }
 
@@ -124,9 +124,15 @@ class ScheduleDetailViewController: UITableViewController {
         }
     }
     
-    func openTimeSelector(isExistingAlarm: Bool) {
-        if isExistingAlarm, let vc = storyboard?.instantiateViewController(withIdentifier: "AlarmDetail") as? AlarmDetailViewController {
+    func openTimeSelector(forAlarmAt index: Int) {
+        if index < tableView.numberOfRows(inSection: 2), let vc = storyboard?.instantiateViewController(withIdentifier: "AlarmDetail") as? AlarmDetailViewController {
             vc.title = "Edit alarm"
+            vc.callback = { [weak self] returnedAlarm in
+                if let returnedAlarm = returnedAlarm {
+                    self?.schedule.alarms[index] = returnedAlarm
+                    self?.tableView.reloadData()
+                }
+            }
             navigationController?.pushViewController(vc, animated: true)
         } else {
             performSegue(withIdentifier: "newAlarmPopup", sender: nil)
@@ -144,6 +150,12 @@ class ScheduleDetailViewController: UITableViewController {
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let nav = segue.destination as? UINavigationController, let vc = nav.topViewController as? AlarmDetailViewController, segue.identifier == "newAlarmPopup" {
+            vc.callback = { [weak self] returnedAlarm in
+                if let returnedAlarm = returnedAlarm {
+                    self?.schedule.alarms.append(returnedAlarm)
+                    self?.tableView.reloadData()
+                }
+            }
             vc.isPopup = true
         }
     }

@@ -30,14 +30,14 @@
                                             <rect key="frame" x="20" y="10" width="85" height="201"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="moi-y6-Jxu">
-                                                    <rect key="frame" x="37.666666666666664" y="150.33333333333334" width="10" height="21"/>
+                                                    <rect key="frame" x="37.666666666666664" y="143.33333333333334" width="10" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days until street cleaning" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uyi-7B-kWD">
-                                                    <rect key="frame" x="0.0" y="179.33333333333334" width="85" height="21.666666666666657"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Days until street cleaning" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uyi-7B-kWD">
+                                                    <rect key="frame" x="0.0" y="172.33333333333334" width="85" height="28.666666666666657"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -117,6 +117,7 @@
                                 <connections>
                                     <outlet property="calendarContainerView" destination="Aad-ET-BaK" id="Jfn-yu-vUQ"/>
                                     <outlet property="countdown" destination="moi-y6-Jxu" id="bW8-LO-RPc"/>
+                                    <outlet property="countdownLabel" destination="Uyi-7B-kWD" id="qzb-g2-jFD"/>
                                     <outlet property="optionsButton" destination="LFv-Ub-Smn" id="OXE-7q-zxh"/>
                                     <outlet property="scheduleLabel" destination="tCh-h1-I1F" id="eXj-Zd-HzE"/>
                                     <outlet property="switchButton" destination="AOq-Xj-w4w" id="8za-tF-KYq"/>
@@ -295,6 +296,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="muc-el-4oI"/>
                     <connections>
+                        <outlet property="datePicker" destination="o0R-Mi-L7x" id="CGJ-kg-h55"/>
                         <outlet property="daySelectionButton" destination="qMu-rV-ky0" id="jyT-Zy-XSJ"/>
                         <outlet property="deleteButton" destination="hWR-Jv-Ooc" id="bE1-2M-Ire"/>
                     </connections>

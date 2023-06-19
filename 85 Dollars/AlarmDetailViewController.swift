@@ -11,6 +11,7 @@ class AlarmDetailViewController: UIViewController {
 
     @IBOutlet var daySelectionButton: UIButton!
     @IBOutlet var deleteButton: UIButton!
+    @IBOutlet var datePicker: UIDatePicker!
     
     var numDays = 1
     let menuOptions = [
@@ -23,7 +24,7 @@ class AlarmDetailViewController: UIViewController {
         "6 days before cleaning",
         "1 week before cleaning"]
     
-    var callback: ((_: TimeInterval?) -> Void)?
+    var callback: ((_: Alarm?) -> Void)?
     var isPopup = false
     
     override func viewDidLoad() {
@@ -50,7 +51,13 @@ class AlarmDetailViewController: UIViewController {
     
     @objc func setAlarm() {
         if let callback = callback {
-            //TODO: implement alarm math
+            let calendar = Calendar(identifier: .gregorian)
+            let dateComponents = calendar.dateComponents([.hour, .minute], from: datePicker.date)
+            if let hour = dateComponents.hour, let minutes = dateComponents.minute {
+                callback(Alarm(daysInAdvance: numDays, hour: hour, minute: minutes))
+            } else {
+                callback(nil)
+            }
         } else {
             print("No alarm detail callback specified")
         }
@@ -66,7 +73,8 @@ class AlarmDetailViewController: UIViewController {
     }
 
     @IBAction func deleteButtonTapped(_ sender: Any) {
-        //TODO: delete alarm so that nil is returned
-        setAlarm()
+        if let callback = callback {
+            callback(nil)
+        }
     }
 }

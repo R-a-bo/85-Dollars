@@ -11,9 +11,8 @@ struct Schedule: Codable {
     
     var weekdays: [Weekday]
     var weeks: [Rotation]
-    var alarms: [TimeInterval]
+    var alarms: [Alarm]
     var hourOfDay: Int?
-    // TODO: make name into a computed property, integrate into UI
     var name: String?
     // stores a map from months (measured by difference from current) to sets of street cleaning days
     var cleaningDays = [Int: Set<DateComponents>]()
@@ -109,18 +108,20 @@ struct Schedule: Codable {
         return rotationString
     }
     
-    func alarmStringRepresentation(for alarm: Int) -> String {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .full
-        formatter.allowedUnits = [.day, .hour]
-        let result = formatter.string(from: alarms[alarm])
-        if let result = result {
-            return "\(result) before cleaning times"
-        } else {
-            print("Unable to generate string for alarm \(alarm) of \(alarms[alarm])")
-            return ""
-        }
-    }
+    // old alarm string representation, made for alarms being time intervals before street cleaning
+    // kept in case of future use when support for cleaning times is added
+//    func alarmStringRepresentationOld(for alarm: Int) -> String {
+//        let formatter = DateComponentsFormatter()
+//        formatter.unitsStyle = .full
+//        formatter.allowedUnits = [.day, .hour]
+//        let result = formatter.string(from: alarms[alarm])
+//        if let result = result {
+//            return "\(result) before cleaning times"
+//        } else {
+//            print("Unable to generate string for alarm \(alarm) of \(alarms[alarm])")
+//            return ""
+//        }
+//    }
     
     func scheduleTitle() -> NSMutableAttributedString {
         let weekdaysText = weekdaysStringRepresentation(isTruncated: true)
@@ -128,6 +129,10 @@ struct Schedule: Codable {
         let scheduleText = NSMutableAttributedString.init(string: "\(weekdaysText)\n\(rotationText)")
         scheduleText.setAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)], range: NSMakeRange(0, weekdaysText.count))
         return scheduleText
+    }
+    
+    func setAlarms() {
+        for alarm in alarms { alarm.setAlarm(for: self) }
     }
     
 }
@@ -172,4 +177,50 @@ enum Rotation: Int, CustomStringConvertible, Comparable, Codable {
     static func < (lhs: Rotation, rhs: Rotation) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
+}
+
+struct Alarm: Codable {
+    
+    var daysInAdvance: Int
+    var hour: Int
+    var minute: Int
+    
+    func generateNextAlarmDay(for schedule: Schedule) -> DateComponents? {
+        guard let daysUntilCleaning = schedule.daysUntilCleaning() else { return nil }
+        let daysUntilAlarm = daysUntilCleaning - daysInAdvance
+        
+        let calendar = Calendar(identifier: .gregorian)
+        guard let alarmTimeToday = calendar.date(bySettingHour: hour, minute: minute, second: 0, of: Date()) else { return nil }
+        guard let alarmDate = calendar.date(byAdding: DateComponents(day: daysUntilAlarm), to: alarmTimeToday) else { return nil }
+        let alarmDateComponents = calendar.dateComponents([.calendar, .era, .year, .day, .hour, .minute], from: alarmDate)
+        return alarmDateComponents
+    }
+    
+    func stringRepresentation() -> String {
+        // can be done with DateFormatter, this allows us to avoid unnecessary complexity though
+        let timeString = "\(hour % 12 == 0 ? 12 : hour % 12):\(minute) \(hour >= 12 ? "PM" : "AM")"
+        let daysString = "\(daysInAdvance) \(daysInAdvance == 1 ? "day" : "days") before cleaning"
+        return "\(timeString), \(daysString)"
+    }
+    
+    func setAlarm(for schedule: Schedule) {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (_, error) in
+            if let error = error {
+                print(error)
+            }
+        }
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Move your car!"
+        content.body = "You have street cleaning in \(daysInAdvance) day\(daysInAdvance == 1 ? "" : "s")"
+        content.sound = UNNotificationSound.default
+        
+        guard let dateComponents = generateNextAlarmDay(for: schedule) else { return }
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        center.add(request)
+    }
+    
 }
