@@ -61,7 +61,7 @@ class ScheduleDetailViewController: UITableViewController {
             } else if indexPath.section == 1 {
                 setCellText(cell, to: schedule.weekdaysStringRepresentation(isTruncated: false))
             } else {
-                setCellText(cell, to: schedule.alarmStringRepresentation(for: schedule.alarms[indexPath.row]))
+                setCellText(cell, to: schedule.alarms[indexPath.row].stringRepresentation())
             }
         }
 

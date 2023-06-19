@@ -198,9 +198,10 @@ struct Alarm: Codable {
     
     func stringRepresentation() -> String {
         // can be done with DateFormatter, this allows us to avoid unnecessary complexity though
-        let timeString = "\(hour % 12 == 0 ? 12 : hour % 12):\(minute) \(hour >= 12 ? "PM" : "AM")"
+        let hourString = "\(hour % 12 == 0 ? 12 : hour % 12)"
+        let minuteString = "\(minute < 10 ? "0" : "")\(minute)"
         let daysString = "\(daysInAdvance) \(daysInAdvance == 1 ? "day" : "days") before cleaning"
-        return "\(timeString), \(daysString)"
+        return "\(hourString):\(minuteString) \(hour >= 12 ? "PM" : "AM"), \(daysString)"
     }
     
     func setAlarm(for schedule: Schedule) {
