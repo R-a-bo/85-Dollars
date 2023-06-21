@@ -71,6 +71,11 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
                 self?.schedules.remove(at: indexPath.row)
                 self?.tableView.deleteRows(at: [indexPath], with: .automatic)
                 self?.saveSchedules()
+                if self?.activeSchedule == indexPath.row {
+                    self?.activeSchedule = -1
+                    let userDefaults = UserDefaults.standard
+                    userDefaults.set(self?.activeSchedule, forKey: "activeSchedule")
+                }
             }])
         
         cell.scheduleLabel.attributedText = schedules[indexPath.row].scheduleTitle()
@@ -215,7 +220,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
             vc.callback = { [weak self] schedule in
                 if schedule.weekdays.count > 0 && schedule.weeks.count > 0 {
                     self?.schedules[scheduleIndex] = schedule
-                    self?.refreshCalendar()
+                    if self?.activeSchedule == scheduleIndex { self?.refreshCalendar() }
                     guard let editedCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
                     self?.refreshCellTitle(editedCell)
                     self?.saveSchedules()
