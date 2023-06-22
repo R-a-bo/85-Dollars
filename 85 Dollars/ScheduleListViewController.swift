@@ -12,7 +12,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
     var calendarView: UICalendarView!
     
     var schedules = [Schedule]()
-    var activeSchedule = 0
+    var activeSchedule: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         loadSchedules()
         
         let userDefaults = UserDefaults.standard
-        activeSchedule = userDefaults.object(forKey: "activeSchedule") as? Int ?? 0
+        activeSchedule = userDefaults.object(forKey: "activeSchedule") as? Int ?? -1
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         
@@ -29,6 +29,8 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         calendarView.calendar = gregorianCalendar
         calendarView.translatesAutoresizingMaskIntoConstraints = false
         calendarView.delegate = self
+        
+        if schedules.isEmpty { setBackground() }
     }
 
     // MARK: - Table view data source
@@ -76,6 +78,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
                     let userDefaults = UserDefaults.standard
                     userDefaults.set(self?.activeSchedule, forKey: "activeSchedule")
                 }
+                if self?.tableView.numberOfRows(inSection: 0) == 0 { self?.setBackground() }
             }])
         
         cell.scheduleLabel.attributedText = schedules[indexPath.row].scheduleTitle()
@@ -176,6 +179,16 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         schedule.setAlarms()
     }
     
+    func setBackground() {
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height : 50))
+        label.textAlignment = .center
+        label.numberOfLines = 2
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.textColor = .systemGray
+        label.text = "Tap '+' to create\nyour first schedule!"
+        tableView.backgroundView = label
+    }
+    
     // MARK: - UICalendarViewDelegate
     
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
@@ -212,6 +225,7 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
                     self?.setAlarms(for: schedule)
                     self?.switchToggled(in: newCell)
                     self?.saveSchedules()
+                    self?.tableView.backgroundView = nil
                 }
             }
         } else {
