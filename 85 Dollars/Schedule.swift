@@ -132,6 +132,8 @@ struct Schedule: Codable {
     }
     
     func setAlarms() {
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
         for alarm in alarms { alarm.setAlarm(for: self) }
     }
     

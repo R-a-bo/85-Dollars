@@ -62,10 +62,10 @@
             filePath = "85 Dollars/ScheduleListViewCell.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "ScheduleListViewCell"
-            landmarkType = "3">
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "switchTapped()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -93,6 +93,181 @@
             startingLineNumber = "132"
             endingLineNumber = "132"
             landmarkName = "openTimeSelector(forAlarmAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "580A50D1-CDBB-4844-AB2B-2B293BC4F139"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "85 Dollars/ScheduleListViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "calendarView(_:decorationFor:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "580A50D1-CDBB-4844-AB2B-2B293BC4F139 - 3973cf78ec6ed1bc"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "_5_Dollars.ScheduleListViewCell.switchTapped() -&gt; ()"
+                  moduleName = "85 Dollars"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rabo/Desktop/85%20Dollars/85%20Dollars/ScheduleListViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "157">
+               </Location>
+               <Location
+                  uuid = "580A50D1-CDBB-4844-AB2B-2B293BC4F139 - c41d502618fcc28e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "_5_Dollars.ScheduleListViewCell.calendarView(_: __C.UICalendarView, decorationFor: Foundation.DateComponents) -&gt; Swift.Optional&lt;__C.UICalendarViewDecoration&gt;"
+                  moduleName = "85 Dollars"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rabo/Desktop/85%20Dollars/85%20Dollars/ScheduleListViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "580A50D1-CDBB-4844-AB2B-2B293BC4F139 - c41d502618fcc28e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "_5_Dollars.ScheduleListViewCell.calendarView(_: __C.UICalendarView, decorationFor: Foundation.DateComponents) -&gt; Swift.Optional&lt;__C.UICalendarViewDecoration&gt;"
+                  moduleName = "85 Dollars"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rabo/Desktop/85%20Dollars/85%20Dollars/ScheduleListViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "247">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EC2BC4A5-C31A-4883-8D58-6D2698EA6442"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "85 Dollars/ScheduleListViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "calendarView(_:decorationFor:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5F2D6827-902D-4BEB-8B0B-7645C6C3C880"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "85 Dollars/ScheduleListViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "calendarView(_:decorationFor:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "5F2D6827-902D-4BEB-8B0B-7645C6C3C880 - 3973cf78ec6ed19d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "_5_Dollars.ScheduleListViewCell.switchTapped() -&gt; ()"
+                  moduleName = "85 Dollars"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rabo/Desktop/85%20Dollars/85%20Dollars/ScheduleListViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "70"
+                  endingLineNumber = "70"
+                  offsetFromSymbolStart = "46">
+               </Location>
+               <Location
+                  uuid = "5F2D6827-902D-4BEB-8B0B-7645C6C3C880 - c41d502618fcc28e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "_5_Dollars.ScheduleListViewCell.calendarView(_: __C.UICalendarView, decorationFor: Foundation.DateComponents) -&gt; Swift.Optional&lt;__C.UICalendarViewDecoration&gt;"
+                  moduleName = "85 Dollars"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/rabo/Desktop/85%20Dollars/85%20Dollars/ScheduleListViewCell.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "71"
+                  endingLineNumber = "71"
+                  offsetFromSymbolStart = "180">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "86DADF8A-1363-42C1-A1EA-AA1EDBA6219C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "85 Dollars/ScheduleListViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
+            landmarkName = "setup(isActive:schedule:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BDCB0EE2-7705-41D2-9123-EF075EFC9C7E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "85 Dollars/ScheduleListViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "setup(isActive:schedule:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "007F90CA-736A-4838-92AA-E7FC2A3A2E60"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "85 Dollars/ScheduleListViewCell.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "setup(isActive:schedule:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

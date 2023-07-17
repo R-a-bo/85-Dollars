@@ -22,6 +22,7 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
     var switchCallback: (() -> Void)?
     
     func setup(isActive: Bool, schedule: Schedule) {
+        self.schedule = schedule
         switchButton.setOn(isActive, animated: true)
         scheduleLabel.isHidden = isActive
         if let daysUntilCleaning = schedule.daysUntilCleaning() {
@@ -31,6 +32,7 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
         }
         if isActive {
             setupCalendar()
+            schedule.setAlarms()
         } else {
             calendarView?.removeFromSuperview()
             scheduleLabel.attributedText = schedule.scheduleTitle()

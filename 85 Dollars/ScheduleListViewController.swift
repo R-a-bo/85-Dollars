@@ -37,9 +37,6 @@ class ScheduleListViewController: UITableViewController {
         }
         
         let schedule = schedules[indexPath.row]
-        if activeSchedule == indexPath.row {
-            setAlarms(for: schedule)
-        }
         
         cell.setup(isActive: activeSchedule == indexPath.row, schedule: schedule)
         cell.switchCallback = { [weak self] in
@@ -80,7 +77,6 @@ class ScheduleListViewController: UITableViewController {
                 activeCell.setup(isActive: false, schedule: schedules[activeSchedule])
             }
             activeSchedule = indexOfCurrentCell
-            setAlarms(for: schedules[activeSchedule])
         } else {
             activeSchedule = -1
         }
@@ -117,13 +113,6 @@ class ScheduleListViewController: UITableViewController {
         }
     }
     
-    func setAlarms(for schedule: Schedule) {
-        let center = UNUserNotificationCenter.current()
-        center.removeAllPendingNotificationRequests()
-        
-        schedule.setAlarms()
-    }
-    
     func setBackground() {
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height : 50))
         label.textAlignment = .center
@@ -151,11 +140,11 @@ class ScheduleListViewController: UITableViewController {
                     self?.schedules[scheduleIndex] = schedule
                     self?.tableView.insertRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .bottom)
                     guard let newCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
-                    newCell.switchButton.setOn(true, animated: true)
-                    self?.setAlarms(for: schedule)
-                    self?.switchToggled(in: newCell)
+                    newCell.setup(isActive: true, schedule: schedule)
                     self?.saveSchedules()
                     self?.tableView.backgroundView = nil
+                } else {
+                    self?.schedules.removeLast()
                 }
             }
         } else {
