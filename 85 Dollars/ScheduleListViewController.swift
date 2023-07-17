@@ -7,9 +7,7 @@
 
 import UIKit
 
-class ScheduleListViewController: UITableViewController, UICalendarViewDelegate {
-    
-    var calendarView: UICalendarView!
+class ScheduleListViewController: UITableViewController {
     
     var schedules = [Schedule]()
     var activeSchedule: Int!
@@ -23,12 +21,6 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         activeSchedule = userDefaults.object(forKey: "activeSchedule") as? Int ?? -1
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
-        
-        calendarView = UICalendarView()
-        let gregorianCalendar = Calendar(identifier: .gregorian)
-        calendarView.calendar = gregorianCalendar
-        calendarView.translatesAutoresizingMaskIntoConstraints = false
-        calendarView.delegate = self
         
         if schedules.isEmpty { setBackground() }
     }
@@ -45,26 +37,14 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         }
         
         let schedule = schedules[indexPath.row]
-        cell.switchButton.isOn = activeSchedule == indexPath.row
-        cell.switchCallback = { [weak self] in
-            self?.switchToggled(in: cell)
-        }
-        
-        if let daysUntilCleaning = schedule.daysUntilCleaning() {
-            cell.countdown.text = String(daysUntilCleaning)
-        } else {
-            cell.countdown.text = "∞"
-        }
-        
         if activeSchedule == indexPath.row {
-            cell.scheduleLabel.isHidden = true
-            setupCalendar(for: cell)
             setAlarms(for: schedule)
         }
         
-        cell.scheduleLabel.adjustsFontSizeToFitWidth = true
-        cell.countdownLabel.adjustsFontSizeToFitWidth = true
-        
+        cell.setup(isActive: activeSchedule == indexPath.row, schedule: schedule)
+        cell.switchCallback = { [weak self] in
+            self?.switchToggled(in: cell)
+        }
         cell.optionsButton.menu = UIMenu(children: [
             UIAction(title: "Edit", image: UIImage(systemName: "pencil")) { [weak self] _ in
                 self?.performSegue(withIdentifier: "scheduleDetailPopup", sender: indexPath.row)
@@ -80,33 +60,11 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
                 }
                 if self?.tableView.numberOfRows(inSection: 0) == 0 { self?.setBackground() }
             }])
-        
-        cell.scheduleLabel.attributedText = schedules[indexPath.row].scheduleTitle()
 
         return cell
     }
     
     // MARK: - Utility methods
-    
-    func setupCalendar(for cell: ScheduleListViewCell) {
-        cell.calendarContainerView.addSubview(calendarView)
-        NSLayoutConstraint.activate([
-            calendarView.leadingAnchor.constraint(equalTo: cell.calendarContainerView.leadingAnchor),
-            calendarView.trailingAnchor.constraint(equalTo: cell.calendarContainerView.trailingAnchor),
-            calendarView.centerXAnchor.constraint(equalTo: cell.calendarContainerView.centerXAnchor),
-            calendarView.heightAnchor.constraint(equalTo: cell.calendarContainerView.heightAnchor),
-        ])
-    }
-    
-    func refreshCalendar() {
-        let calendar = Calendar(identifier: .gregorian)
-        let thisMonthComponents = calendar.dateComponents([.month, .year], from: Date())
-        var currentMonthDates = [DateComponents]()
-        for i in 1...31 {
-            currentMonthDates.append(DateComponents(calendar: calendar, era: 1, year: thisMonthComponents.year!, month: thisMonthComponents.month!, day: i))
-        }
-        calendarView.reloadDecorations(forDateComponents: currentMonthDates, animated: true)
-    }
     
     @objc func addButtonTapped() {
         performSegue(withIdentifier: "scheduleDetailPopup", sender: schedules.count)
@@ -114,38 +72,25 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
     
     func switchToggled(in cell: ScheduleListViewCell) {
         tableView.beginUpdates()
-        calendarView.removeFromSuperview()
+        
+        guard let indexOfCurrentCell = tableView.indexPath(for: cell)?.row else { return }
+        
         if cell.switchButton.isOn {
-            cell.scheduleLabel.isHidden = true
-            setupCalendar(for: cell)
-            
             if let activeCell = tableView.cellForRow(at: IndexPath(row: activeSchedule, section: 0)) as? ScheduleListViewCell {
-                activeCell.switchButton.setOn(false, animated: true)
-                activeCell.scheduleLabel.isHidden = false
-                refreshCellTitle(activeCell)
+                activeCell.setup(isActive: false, schedule: schedules[activeSchedule])
             }
-            
-            guard let indexOfCurrentCell = tableView.indexPath(for: cell) else { return }
-            
-            activeSchedule = indexOfCurrentCell.row
-            
-            refreshCalendar()
-            
+            activeSchedule = indexOfCurrentCell
             setAlarms(for: schedules[activeSchedule])
         } else {
-            cell.scheduleLabel.isHidden = false
-            refreshCellTitle(cell)
             activeSchedule = -1
         }
+        
+        cell.setup(isActive: cell.switchButton.isOn, schedule: schedules[indexOfCurrentCell])
+        
         let userDefaults = UserDefaults.standard
         userDefaults.set(activeSchedule, forKey: "activeSchedule")
         
         tableView.endUpdates()
-    }
-    
-    func refreshCellTitle(_ cell: ScheduleListViewCell) {
-        guard let scheduleIndex = tableView.indexPath(for: cell)?.row else { return }
-        cell.scheduleLabel.attributedText = schedules[scheduleIndex].scheduleTitle()
     }
     
     func saveSchedules() {
@@ -188,21 +133,6 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
         label.text = "Tap '+' to create\nyour first schedule!"
         tableView.backgroundView = label
     }
-    
-    // MARK: - UICalendarViewDelegate
-    
-    func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
-        let cleaningDays = schedules[activeSchedule].getCleaningDays(for: dateComponents.month!, of: dateComponents.year!)
-        if cleaningDays.contains(dateComponents) {
-            return .customView {
-                let cleaningEmoji = UILabel()
-                cleaningEmoji.text = "🧹"
-                return cleaningEmoji
-            }
-        } else {
-            return nil
-        }
-    }
 
     // MARK: - Navigation
 
@@ -234,9 +164,8 @@ class ScheduleListViewController: UITableViewController, UICalendarViewDelegate 
             vc.callback = { [weak self] schedule in
                 if schedule.weekdays.count > 0 && schedule.weeks.count > 0 {
                     self?.schedules[scheduleIndex] = schedule
-                    if self?.activeSchedule == scheduleIndex { self?.refreshCalendar() }
                     guard let editedCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
-                    self?.refreshCellTitle(editedCell)
+                    editedCell.setup(isActive: self?.activeSchedule == scheduleIndex, schedule: schedule)
                     self?.saveSchedules()
                 }
             }
