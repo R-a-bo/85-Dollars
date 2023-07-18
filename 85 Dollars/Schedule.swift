@@ -7,7 +7,7 @@
 
 import UIKit
 
-struct Schedule: Codable {
+class Schedule: Codable {
     
     var weekdays: [Weekday]
     var weeks: [Rotation]
@@ -16,6 +16,12 @@ struct Schedule: Codable {
     var name: String?
     // stores a map from months (measured by difference from current) to sets of street cleaning days
     var cleaningDays = [Int: Set<DateComponents>]()
+    
+    init() {
+        weekdays = [Weekday]()
+        weeks = [Rotation]()
+        alarms = [Alarm]()
+    }
     
     func daysUntilCleaning() -> Int? {
         let calendar = Calendar(identifier: .gregorian)

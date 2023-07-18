@@ -42,7 +42,7 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
     }
     
     func setupCalendar() {
-        calendarView = UICalendarView()
+        if calendarView == nil { calendarView = UICalendarView() }
         guard let calendarView = calendarView else { return }
         let gregorianCalendar = Calendar(identifier: .gregorian)
         calendarView.calendar = gregorianCalendar

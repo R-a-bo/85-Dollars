@@ -15,13 +15,10 @@ class ScheduleDetailViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        schedule = schedule ?? Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [Alarm]())
+        schedule = schedule ?? Schedule()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
-        
-        // TODO: test code - delete
-//        schedule = Schedule(weekdays: [Weekday.Monday, Weekday.Friday], weeks: [Rotation.First, Rotation.Third], alarms: [207360])
     }
 
     // MARK: - Table view data source

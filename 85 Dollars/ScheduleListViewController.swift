@@ -15,7 +15,7 @@ class ScheduleListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadSchedules()
+//        loadSchedules()
         
         let userDefaults = UserDefaults.standard
         activeSchedule = userDefaults.object(forKey: "activeSchedule") as? Int ?? -1
@@ -47,10 +47,12 @@ class ScheduleListViewController: UITableViewController {
                 self?.performSegue(withIdentifier: "scheduleDetailPopup", sender: indexPath.row)
             },
             UIAction(title: "Delete Schedule", image: UIImage(systemName: "trash")) { [weak self] _ in
-                self?.schedules.remove(at: indexPath.row)
-                self?.tableView.deleteRows(at: [indexPath], with: .automatic)
+                let scheduleIndex = self?.schedules.firstIndex { $0 === schedule }
+                guard let scheduleIndex = scheduleIndex else { return }
+                self?.schedules.remove(at: scheduleIndex)
+                self?.tableView.deleteRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .automatic)
                 self?.saveSchedules()
-                if self?.activeSchedule == indexPath.row {
+                if self?.activeSchedule == scheduleIndex {
                     self?.activeSchedule = -1
                     let userDefaults = UserDefaults.standard
                     userDefaults.set(self?.activeSchedule, forKey: "activeSchedule")
@@ -133,14 +135,15 @@ class ScheduleListViewController: UITableViewController {
         
         if scheduleIndex == schedules.count {
             // new schedule
-            schedules.append(Schedule(weekdays: [Weekday](), weeks: [Rotation](), alarms: [Alarm]()))
+            schedules.append(Schedule())
             vc.title = "Create cleaning schedule"
             vc.callback = { [weak self] schedule in
                 if schedule.weekdays.count > 0 && schedule.weeks.count > 0 {
                     self?.schedules[scheduleIndex] = schedule
                     self?.tableView.insertRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .bottom)
                     guard let newCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
-                    newCell.setup(isActive: true, schedule: schedule)
+                    newCell.switchButton.isOn = true
+                    self?.switchToggled(in: newCell)
                     self?.saveSchedules()
                     self?.tableView.backgroundView = nil
                 } else {
