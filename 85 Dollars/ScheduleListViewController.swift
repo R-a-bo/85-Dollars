@@ -15,7 +15,7 @@ class ScheduleListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        loadSchedules()
+        loadSchedules()
         
         let userDefaults = UserDefaults.standard
         activeSchedule = userDefaults.object(forKey: "activeSchedule") as? Int ?? -1

@@ -9,19 +9,11 @@ import UIKit
 
 class Schedule: Codable {
     
-    var weekdays: [Weekday]
-    var weeks: [Rotation]
-    var alarms: [Alarm]
+    var weekdays = [Weekday]()
+    var weeks = [Rotation]()
+    var alarms = [Alarm]()
     var hourOfDay: Int?
     var name: String?
-    // stores a map from months (measured by difference from current) to sets of street cleaning days
-    var cleaningDays = [Int: Set<DateComponents>]()
-    
-    init() {
-        weekdays = [Weekday]()
-        weeks = [Rotation]()
-        alarms = [Alarm]()
-    }
     
     func daysUntilCleaning() -> Int? {
         let calendar = Calendar(identifier: .gregorian)
@@ -53,9 +45,6 @@ class Schedule: Codable {
         let monthsFromNowComponents = calendar.dateComponents([.month], from: DateComponents(year: currentMonth.year!, month: currentMonth.month!), to: DateComponents(year: year, month: month))
         
         guard let monthsFromNow = monthsFromNowComponents.month else { return Set<DateComponents>() }
-        if let dates = cleaningDays[monthsFromNow] {
-            return dates
-        }
         
         var dates = Set<DateComponents>()
         
@@ -113,21 +102,6 @@ class Schedule: Codable {
         }
         return rotationString
     }
-    
-    // old alarm string representation, made for alarms being time intervals before street cleaning
-    // kept in case of future use when support for cleaning times is added
-//    func alarmStringRepresentationOld(for alarm: Int) -> String {
-//        let formatter = DateComponentsFormatter()
-//        formatter.unitsStyle = .full
-//        formatter.allowedUnits = [.day, .hour]
-//        let result = formatter.string(from: alarms[alarm])
-//        if let result = result {
-//            return "\(result) before cleaning times"
-//        } else {
-//            print("Unable to generate string for alarm \(alarm) of \(alarms[alarm])")
-//            return ""
-//        }
-//    }
     
     func scheduleTitle() -> NSMutableAttributedString {
         let weekdaysText = weekdaysStringRepresentation(isTruncated: true)

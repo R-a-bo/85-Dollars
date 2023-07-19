@@ -16,9 +16,9 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
     @IBOutlet var scheduleLabel: UILabel!
     @IBOutlet var countdownLabel: UILabel!
     
-    var calendarView: UICalendarView?
+    var calendarView = UICalendarView()
+    var cleaningDays = [Int: Set<DateComponents>]()
     var schedule: Schedule?
-    
     var switchCallback: (() -> Void)?
     
     func setup(isActive: Bool, schedule: Schedule) {
@@ -34,7 +34,7 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
             setupCalendar()
             schedule.setAlarms()
         } else {
-            calendarView?.removeFromSuperview()
+            calendarView.removeFromSuperview()
             scheduleLabel.attributedText = schedule.scheduleTitle()
         }
         scheduleLabel.adjustsFontSizeToFitWidth = true
@@ -42,8 +42,8 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
     }
     
     func setupCalendar() {
-        if calendarView == nil { calendarView = UICalendarView() }
-        guard let calendarView = calendarView else { return }
+        cleaningDays = [Int: Set<DateComponents>]()
+        
         let gregorianCalendar = Calendar(identifier: .gregorian)
         calendarView.calendar = gregorianCalendar
         calendarView.translatesAutoresizingMaskIntoConstraints = false
@@ -70,8 +70,11 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
     
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
         guard let schedule = schedule else { return nil }
-        let cleaningDays = schedule.getCleaningDays(for: dateComponents.month!, of: dateComponents.year!)
-        if cleaningDays.contains(dateComponents) {
+        let monthsKey = dateComponents.month! + dateComponents.year! * 12
+        if !cleaningDays.keys.contains(monthsKey) {
+            cleaningDays[monthsKey] = schedule.getCleaningDays(for: dateComponents.month!, of: dateComponents.year!)
+        } 
+        if cleaningDays[monthsKey]!.contains(dateComponents) {
             return .customView {
                 let cleaningEmoji = UILabel()
                 cleaningEmoji.text = "🧹"
