@@ -25,17 +25,17 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
         self.schedule = schedule
         switchButton.setOn(isActive, animated: true)
         scheduleLabel.isHidden = isActive
-        if let daysUntilCleaning = schedule.daysUntilCleaning() {
+        if let daysUntilCleaning = DatesHelper.daysUntilCleaning(for: schedule) {
             countdown.text = String(daysUntilCleaning)
         } else {
             countdown.text = "∞"
         }
         if isActive {
             setupCalendar()
-            schedule.setAlarms()
+            DatesHelper.setAlarms(for: schedule)
         } else {
             calendarView.removeFromSuperview()
-            scheduleLabel.attributedText = schedule.scheduleTitle()
+            scheduleLabel.attributedText = StringHelper.string(for: schedule)
         }
         scheduleLabel.adjustsFontSizeToFitWidth = true
         countdownLabel.adjustsFontSizeToFitWidth = true
@@ -72,7 +72,7 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
         guard let schedule = schedule else { return nil }
         let monthsKey = dateComponents.month! + dateComponents.year! * 12
         if !cleaningDays.keys.contains(monthsKey) {
-            cleaningDays[monthsKey] = schedule.getCleaningDays(for: dateComponents.month!, of: dateComponents.year!)
+            cleaningDays[monthsKey] = DatesHelper.getCleaningDays(for: schedule, in: dateComponents.month!, of: dateComponents.year!)
         } 
         if cleaningDays[monthsKey]!.contains(dateComponents) {
             return .customView {

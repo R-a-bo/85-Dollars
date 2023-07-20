@@ -54,11 +54,11 @@ class ScheduleDetailViewController: UITableViewController {
         } else {
             cell = tableView.dequeueReusableCell(withIdentifier: "item", for: indexPath)
             if indexPath.section == 0 {
-                setCellText(cell, to: schedule.rotationStringRepresentation())
+                setCellText(cell, to: StringHelper.string(for: schedule.weeks))
             } else if indexPath.section == 1 {
-                setCellText(cell, to: schedule.weekdaysStringRepresentation(isTruncated: false))
+                setCellText(cell, to: StringHelper.string(for: schedule.weekdays, isTruncated: false))
             } else {
-                setCellText(cell, to: schedule.alarms[indexPath.row].stringRepresentation())
+                setCellText(cell, to: StringHelper.string(for: schedule.alarms[indexPath.row]))
             }
         }
 
