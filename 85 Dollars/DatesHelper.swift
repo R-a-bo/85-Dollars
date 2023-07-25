@@ -9,9 +9,12 @@ import UIKit
 
 class DatesHelper {
     
+    static var currentDate = { return Date() }
+    static var calendar = Calendar(identifier: .gregorian)
+    static var notificationCenter: UserNotificationCenter = UNUserNotificationCenter.current()
+    
     static func daysUntilCleaning(for schedule: Schedule) -> Int? {
-        let calendar = Calendar(identifier: .gregorian)
-        let todayComponents = calendar.dateComponents([.day, .month, .year], from: Date())
+        let todayComponents = calendar.dateComponents([.day, .month, .year], from: currentDate())
         guard let currentMonth = todayComponents.month, let currentYear = todayComponents.year else { return 0 }
         
         if let shortestDaysUntilCleaning = daysUntilCleaning(for: schedule, from: todayComponents, to: currentMonth, of: currentYear, accordingTo: calendar) {
@@ -34,11 +37,8 @@ class DatesHelper {
     
     // returns set of street cleaning days as DateComponents's for the given month
     static func getCleaningDays(for schedule: Schedule, in month: Int, of year: Int) -> Set<DateComponents> {
-        let calendar = Calendar(identifier: .gregorian)
-        let currentMonth = calendar.dateComponents([.year, .month], from: Date())
+        let currentMonth = calendar.dateComponents([.year, .month], from: currentDate())
         let monthsFromNowComponents = calendar.dateComponents([.month], from: DateComponents(year: currentMonth.year!, month: currentMonth.month!), to: DateComponents(year: year, month: month))
-        
-        guard let monthsFromNow = monthsFromNowComponents.month else { return Set<DateComponents>() }
         
         var dates = Set<DateComponents>()
         
@@ -66,18 +66,16 @@ class DatesHelper {
         guard let daysUntilCleaning = daysUntilCleaning(for: schedule) else { return nil }
         let daysUntilAlarm = daysUntilCleaning - alarm.daysInAdvance
         
-        let calendar = Calendar(identifier: .gregorian)
-        guard let alarmTimeToday = calendar.date(bySettingHour: alarm.hour, minute: alarm.minute, second: 0, of: Date()) else { return nil }
+        guard let alarmTimeToday = calendar.date(bySettingHour: alarm.hour, minute: alarm.minute, second: 0, of: currentDate()) else { return nil }
         guard let alarmDate = calendar.date(byAdding: DateComponents(day: daysUntilAlarm), to: alarmTimeToday) else { return nil }
-        let alarmDateComponents = calendar.dateComponents([.calendar, .era, .year, .day, .hour, .minute], from: alarmDate)
+        let alarmDateComponents = calendar.dateComponents([.calendar, .era, .year, .month, .day, .hour, .minute], from: alarmDate)
         return alarmDateComponents
     }
     
     static func setAlarms(for schedule: Schedule) {
-        let center = UNUserNotificationCenter.current()
-        center.removeAllPendingNotificationRequests()
+        notificationCenter.removeAllPendingNotificationRequests()
         for alarm in schedule.alarms {
-            center.requestAuthorization(options: [.alert, .badge, .sound]) { (_, error) in
+            notificationCenter.requestAuthorization(options: [.alert, .badge, .sound]) { (_, error) in
                 if let error = error {
                     print(error)
                 }
@@ -92,8 +90,19 @@ class DatesHelper {
             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
             
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
-            center.add(request)
+            notificationCenter.add(request, withCompletionHandler: nil)
         }
     }
     
 }
+
+// allows us to instead use mock notification center for unit testing
+protocol UserNotificationCenter {
+    
+    func requestAuthorization(options: UNAuthorizationOptions, completionHandler: @escaping (Bool, Error?) -> Void)
+    func removeAllPendingNotificationRequests()
+    func add(_ request: UNNotificationRequest, withCompletionHandler handler: ((Error?) -> Void)?)
+    
+}
+
+extension UNUserNotificationCenter: UserNotificationCenter {}

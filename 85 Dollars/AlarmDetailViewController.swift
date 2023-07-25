@@ -30,6 +30,8 @@ class AlarmDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initializeDatePicker()
+        
         var menuChildren = [UIAction]()
         for (i, option) in menuOptions.enumerated() {
             menuChildren.append(UIAction(title: option, state: i == 1 ? .on : .off) { [weak self] action in
@@ -49,15 +51,21 @@ class AlarmDetailViewController: UIViewController {
         }
     }
     
+    func initializeDatePicker() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let date = dateFormatter.date(from: "17:00")
+        guard let date = date else { return }
+        datePicker.date = date
+    }
+    
     @objc func setAlarm() {
         if let callback = callback {
             let calendar = Calendar(identifier: .gregorian)
             let dateComponents = calendar.dateComponents([.hour, .minute], from: datePicker.date)
             if let hour = dateComponents.hour, let minutes = dateComponents.minute {
                 callback(Alarm(daysInAdvance: numDays, hour: hour, minute: minutes))
-            } else {
-                callback(nil)
-            }
+            } 
         } else {
             print("No alarm detail callback specified")
         }
@@ -75,6 +83,7 @@ class AlarmDetailViewController: UIViewController {
     @IBAction func deleteButtonTapped(_ sender: Any) {
         if let callback = callback {
             callback(nil)
+            navigationController?.popViewController(animated: true)
         }
     }
 }

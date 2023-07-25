@@ -127,8 +127,10 @@ class ScheduleDetailViewController: UITableViewController {
             vc.callback = { [weak self] returnedAlarm in
                 if let returnedAlarm = returnedAlarm {
                     self?.schedule.alarms[index] = returnedAlarm
-                    self?.tableView.reloadData()
+                } else {
+                    self?.schedule.alarms.remove(at: index)
                 }
+                self?.tableView.reloadData()
             }
             navigationController?.pushViewController(vc, animated: true)
         } else {

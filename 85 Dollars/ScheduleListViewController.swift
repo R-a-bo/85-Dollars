@@ -9,16 +9,16 @@ import UIKit
 
 class ScheduleListViewController: UITableViewController {
     
+    var scheduleStorageService: ScheduleStorageService = ScheduleFileService()
+    
     var schedules = [Schedule]()
     var activeSchedule: Int!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadSchedules()
-        
-        let userDefaults = UserDefaults.standard
-        activeSchedule = userDefaults.object(forKey: "activeSchedule") as? Int ?? -1
+        schedules = scheduleStorageService.loadSchedules()
+        activeSchedule = scheduleStorageService.loadActiveSchedule()
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
         
@@ -51,11 +51,10 @@ class ScheduleListViewController: UITableViewController {
                 guard let scheduleIndex = scheduleIndex else { return }
                 self?.schedules.remove(at: scheduleIndex)
                 self?.tableView.deleteRows(at: [IndexPath(row: scheduleIndex, section: 0)], with: .automatic)
-                self?.saveSchedules()
+                self?.scheduleStorageService.saveSchedules(schedules: self?.schedules)
                 if self?.activeSchedule == scheduleIndex {
                     self?.activeSchedule = -1
-                    let userDefaults = UserDefaults.standard
-                    userDefaults.set(self?.activeSchedule, forKey: "activeSchedule")
+                    self?.scheduleStorageService.saveActiveSchedule(index: self?.activeSchedule)
                 }
                 if self?.tableView.numberOfRows(inSection: 0) == 0 { self?.setBackground() }
             }])
@@ -85,34 +84,9 @@ class ScheduleListViewController: UITableViewController {
         
         cell.setup(isActive: cell.switchButton.isOn, schedule: schedules[indexOfCurrentCell])
         
-        let userDefaults = UserDefaults.standard
-        userDefaults.set(activeSchedule, forKey: "activeSchedule")
+        scheduleStorageService.saveActiveSchedule(index: activeSchedule)
         
         tableView.endUpdates()
-    }
-    
-    func saveSchedules() {
-        do {
-            let fileURL = try FileManager.default
-                .url(for: .applicationSupportDirectory, in : .userDomainMask, appropriateFor: nil, create: true)
-                .appending(path: "Schedules.plist")
-            let data = try PropertyListEncoder().encode(schedules)
-            try data.write(to: fileURL)
-        } catch {
-            print(error)
-        }
-    }
-    
-    func loadSchedules() {
-        do {
-            let fileURL = try FileManager.default
-                .url(for: .applicationSupportDirectory, in : .userDomainMask, appropriateFor: nil, create: true)
-                .appending(path: "Schedules.plist")
-            let data = try Data(contentsOf: fileURL)
-            schedules = try PropertyListDecoder().decode([Schedule].self, from: data)
-        } catch {
-            print(error)
-        }
     }
     
     func setBackground() {
@@ -144,7 +118,7 @@ class ScheduleListViewController: UITableViewController {
                     guard let newCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
                     newCell.switchButton.isOn = true
                     self?.switchToggled(in: newCell)
-                    self?.saveSchedules()
+                    self?.scheduleStorageService.saveSchedules(schedules: self?.schedules)
                     self?.tableView.backgroundView = nil
                 } else {
                     self?.schedules.removeLast()
@@ -158,7 +132,7 @@ class ScheduleListViewController: UITableViewController {
                     self?.schedules[scheduleIndex] = schedule
                     guard let editedCell = self?.tableView.cellForRow(at: IndexPath(row: scheduleIndex, section: 0)) as? ScheduleListViewCell else { return }
                     editedCell.setup(isActive: self?.activeSchedule == scheduleIndex, schedule: schedule)
-                    self?.saveSchedules()
+                    self?.scheduleStorageService.saveSchedules(schedules: self?.schedules)
                 }
             }
         }

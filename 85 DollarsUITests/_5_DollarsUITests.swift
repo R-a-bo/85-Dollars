@@ -8,26 +8,14 @@
 import XCTest
 
 final class _5_DollarsUITests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
+    
+    var app: XCUIApplication!
+    
+    override func setUp() {
+        super.setUp()
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+        app = XCUIApplication()
+        app.launchArguments.append("--uitesting")
     }
 
     func testLaunchPerformance() throws {
@@ -38,4 +26,65 @@ final class _5_DollarsUITests: XCTestCase {
             }
         }
     }
+    
+    func testCreateSchedule() {
+        app.launch()
+        app.navigationBars["_5_Dollars.ScheduleListView"].buttons["Add"].tap()
+        
+        app.tables/*@START_MENU_TOKEN@*/.staticTexts["Set rotation"]/*[[".cells.staticTexts[\"Set rotation\"]",".staticTexts[\"Set rotation\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.tables.staticTexts["1st"].tap()
+        app.tables.staticTexts["3rd"].tap()
+        app.navigationBars["Create cleaning schedule"].buttons["Done"].tap()
+        
+        app.tables.staticTexts["Add weekdays"].tap()
+        app.tables.staticTexts["Wednesday"].tap()
+        app.navigationBars["Create cleaning schedule"].buttons["Done"].tap()
+        
+        app.tables.staticTexts["Add alarm"].tap()
+        let datePickersQuery = app.datePickers
+        datePickersQuery.pickerWheels["5 o’clock"].swipeDown()
+        datePickersQuery.pickerWheels["00 minutes"].swipeUp()
+        app.buttons["1 day before cleaning"].tap()
+        app.descendants(matching: .any).element(matching: .any, identifier: "2 days before cleaning").tap()
+        app.navigationBars["_5_Dollars.AlarmDetailView"].buttons["Done"].tap()
+        
+        XCTAssertEqual(app.tables.cells.count, 5)
+        app.navigationBars["Create cleaning schedule"].buttons["Done"].tap()
+        XCTAssertEqual(app.tables.cells.count, 2)
+    }
+    
+    func testToggleSchedule() {
+        app.launch()
+        XCTAssertEqual(app.switches.element.value as? String, "0")
+        app.switches.element.tap()
+        XCTAssertEqual(app.switches.element.value as? String, "1")
+        app.switches.element.tap()
+        XCTAssertEqual(app.switches.element.value as? String, "0")
+    }
+    
+    func testEditSchedule() {
+        app.launch()
+        XCTAssertEqual(app.switches.element.value as? String, "1")
+        let tablesQuery = app.tables
+        tablesQuery/*@START_MENU_TOKEN@*/.buttons["more"]/*[[".cells.buttons[\"more\"]",".buttons[\"more\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.collectionViews/*@START_MENU_TOKEN@*/.buttons["Edit"]/*[[".cells.buttons[\"Edit\"]",".buttons[\"Edit\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        XCTAssertEqual(app.tables.cells.count, 5)
+        tablesQuery.staticTexts["1st of the month"].tap()
+        tablesQuery/*@START_MENU_TOKEN@*/.staticTexts["Every week"]/*[[".cells.staticTexts[\"Every week\"]",".staticTexts[\"Every week\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+        let doneButton = app.navigationBars["Edit cleaning schedule"].buttons["Done"]
+        doneButton.tap()
+        doneButton.tap()
+        XCTAssertEqual(app.tables.cells.count, 1)
+        XCTAssertEqual(app.switches.element.value as? String, "1")
+    }
+    
+    func testDeleteSchedule() {
+        app.launch()
+        XCTAssertEqual(app.tables.cells.count, 1)
+        app.buttons["more"].tap()
+        app.collectionViews.buttons["Delete Schedule"].tap()
+        XCTAssertEqual(app.tables.cells.count, 0)
+    }
+    
 }

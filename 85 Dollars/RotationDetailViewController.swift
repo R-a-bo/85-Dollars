@@ -75,6 +75,7 @@ class RotationDetailViewController: UITableViewController {
                     otherCell?.accessoryType = .checkmark
                     addWeek(i)
                 }
+                addWeek(4)
             } else {
                 addWeek(indexPath.row)
             }

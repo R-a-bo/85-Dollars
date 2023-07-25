@@ -15,6 +15,12 @@ class Schedule: Codable {
     var hourOfDay: Int?
     var name: String?
     
+    init(weekdays: [Weekday] = [Weekday](), weeks: [Rotation] = [Rotation](), alarms: [Alarm] = [Alarm]()) {
+        self.weekdays = weekdays
+        self.weeks = weeks
+        self.alarms = alarms
+    }
+    
 }
 
 enum Weekday: Int, CustomStringConvertible, Comparable, Codable {
