@@ -15,14 +15,15 @@
 		121B47782A28699300E4E41D /* _5_DollarsUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47772A28699300E4E41D /* _5_DollarsUITestsLaunchTests.swift */; };
 		121B47852A28709F00E4E41D /* ScheduleListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 121B47842A28709F00E4E41D /* ScheduleListViewController.swift */; };
 		1224A8C42A70537F00FE1FA2 /* ScheduleStorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224A8C32A70537F00FE1FA2 /* ScheduleStorageService.swift */; };
+		1224A8C62A70B2B000FE1FA2 /* PatternSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224A8C52A70B2B000FE1FA2 /* PatternSelectionViewController.swift */; };
+		1224A8C82A70BE4600FE1FA2 /* RotationSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224A8C72A70BE4600FE1FA2 /* RotationSelectionViewController.swift */; };
+		1224A8CA2A70C8AC00FE1FA2 /* WeekdaySelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1224A8C92A70C8AC00FE1FA2 /* WeekdaySelectionViewController.swift */; };
 		1245882A2A68E85700EBF4FF /* StringHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 124588292A68E85700EBF4FF /* StringHelperTests.swift */; };
 		1245882C2A69D9BF00EBF4FF /* DatesHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1245882B2A69D9BF00EBF4FF /* DatesHelperTests.swift */; };
 		12679D9B2A2C2D140007E8D3 /* ScheduleListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12679D9A2A2C2D140007E8D3 /* ScheduleListViewCell.swift */; };
 		12679D9D2A2C3BD50007E8D3 /* Schedule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12679D9C2A2C3BD50007E8D3 /* Schedule.swift */; };
 		12B5366E2A329B9A002B6C22 /* ScheduleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B5366D2A329B9A002B6C22 /* ScheduleDetailViewController.swift */; };
 		12B536E52A393A31002B6C22 /* AlarmDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B536E42A393A31002B6C22 /* AlarmDetailViewController.swift */; };
-		12B536E72A39532F002B6C22 /* WeekdayDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B536E62A39532F002B6C22 /* WeekdayDetailViewController.swift */; };
-		12B536E92A3986C9002B6C22 /* RotationDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12B536E82A3986C9002B6C22 /* RotationDetailViewController.swift */; };
 		12C44D042A68A3F100A50438 /* DatesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C44D032A68A3F100A50438 /* DatesHelper.swift */; };
 		12C44D062A68AE5D00A50438 /* StringHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12C44D052A68AE5D00A50438 /* StringHelper.swift */; };
 		12DB42852A3EBE92005C263E /* Schedules.plist in Resources */ = {isa = PBXBuildFile; fileRef = 12DB42842A3EBE92005C263E /* Schedules.plist */; };
@@ -58,14 +59,15 @@
 		121B47772A28699300E4E41D /* _5_DollarsUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = _5_DollarsUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		121B47842A28709F00E4E41D /* ScheduleListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListViewController.swift; sourceTree = "<group>"; };
 		1224A8C32A70537F00FE1FA2 /* ScheduleStorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleStorageService.swift; sourceTree = "<group>"; };
+		1224A8C52A70B2B000FE1FA2 /* PatternSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternSelectionViewController.swift; sourceTree = "<group>"; };
+		1224A8C72A70BE4600FE1FA2 /* RotationSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationSelectionViewController.swift; sourceTree = "<group>"; };
+		1224A8C92A70C8AC00FE1FA2 /* WeekdaySelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdaySelectionViewController.swift; sourceTree = "<group>"; };
 		124588292A68E85700EBF4FF /* StringHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelperTests.swift; sourceTree = "<group>"; };
 		1245882B2A69D9BF00EBF4FF /* DatesHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DatesHelperTests.swift; path = "85 DollarsTests/DatesHelperTests.swift"; sourceTree = SOURCE_ROOT; };
 		12679D9A2A2C2D140007E8D3 /* ScheduleListViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleListViewCell.swift; sourceTree = "<group>"; };
 		12679D9C2A2C3BD50007E8D3 /* Schedule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Schedule.swift; sourceTree = "<group>"; };
 		12B5366D2A329B9A002B6C22 /* ScheduleDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleDetailViewController.swift; sourceTree = "<group>"; };
 		12B536E42A393A31002B6C22 /* AlarmDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlarmDetailViewController.swift; sourceTree = "<group>"; };
-		12B536E62A39532F002B6C22 /* WeekdayDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayDetailViewController.swift; sourceTree = "<group>"; };
-		12B536E82A3986C9002B6C22 /* RotationDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationDetailViewController.swift; sourceTree = "<group>"; };
 		12C44D032A68A3F100A50438 /* DatesHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesHelper.swift; sourceTree = "<group>"; };
 		12C44D052A68AE5D00A50438 /* StringHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringHelper.swift; sourceTree = "<group>"; };
 		12DB42842A3EBE92005C263E /* Schedules.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Schedules.plist; sourceTree = "<group>"; };
@@ -120,12 +122,13 @@
 			isa = PBXGroup;
 			children = (
 				12C44D052A68AE5D00A50438 /* StringHelper.swift */,
-				12B536E82A3986C9002B6C22 /* RotationDetailViewController.swift */,
 				12B536E42A393A31002B6C22 /* AlarmDetailViewController.swift */,
 				121B47542A28699100E4E41D /* AppDelegate.swift */,
 				1224A8C32A70537F00FE1FA2 /* ScheduleStorageService.swift */,
 				121B475A2A28699100E4E41D /* Main.storyboard */,
-				12B536E62A39532F002B6C22 /* WeekdayDetailViewController.swift */,
+				1224A8C52A70B2B000FE1FA2 /* PatternSelectionViewController.swift */,
+				1224A8C72A70BE4600FE1FA2 /* RotationSelectionViewController.swift */,
+				1224A8C92A70C8AC00FE1FA2 /* WeekdaySelectionViewController.swift */,
 				121B47842A28709F00E4E41D /* ScheduleListViewController.swift */,
 				12C44D032A68A3F100A50438 /* DatesHelper.swift */,
 				12DB42842A3EBE92005C263E /* Schedules.plist */,
@@ -291,15 +294,16 @@
 			files = (
 				1224A8C42A70537F00FE1FA2 /* ScheduleStorageService.swift in Sources */,
 				12C44D042A68A3F100A50438 /* DatesHelper.swift in Sources */,
-				12B536E72A39532F002B6C22 /* WeekdayDetailViewController.swift in Sources */,
 				12C44D062A68AE5D00A50438 /* StringHelper.swift in Sources */,
 				12B5366E2A329B9A002B6C22 /* ScheduleDetailViewController.swift in Sources */,
 				121B47852A28709F00E4E41D /* ScheduleListViewController.swift in Sources */,
+				1224A8C62A70B2B000FE1FA2 /* PatternSelectionViewController.swift in Sources */,
+				1224A8C82A70BE4600FE1FA2 /* RotationSelectionViewController.swift in Sources */,
 				12679D9B2A2C2D140007E8D3 /* ScheduleListViewCell.swift in Sources */,
 				121B47552A28699100E4E41D /* AppDelegate.swift in Sources */,
 				12B536E52A393A31002B6C22 /* AlarmDetailViewController.swift in Sources */,
 				12679D9D2A2C3BD50007E8D3 /* Schedule.swift in Sources */,
-				12B536E92A3986C9002B6C22 /* RotationDetailViewController.swift in Sources */,
+				1224A8CA2A70C8AC00FE1FA2 /* WeekdaySelectionViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,7 +495,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.6;
+				MARKETING_VERSION = 0.1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.georgebirch.-5-Dollars";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -524,7 +528,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.1.6;
+				MARKETING_VERSION = 0.1.7;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.georgebirch.-5-Dollars";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

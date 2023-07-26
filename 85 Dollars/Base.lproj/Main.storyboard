@@ -314,15 +314,15 @@
             </objects>
             <point key="canvasLocation" x="4573.2824427480919" y="645.77464788732402"/>
         </scene>
-        <!--Weekday Detail View Controller-->
+        <!--Weekday Selection View Controller-->
         <scene sceneID="7NP-Hd-qxR">
             <objects>
-                <tableViewController storyboardIdentifier="WeekdayDetail" id="hm5-yV-1qV" customClass="WeekdayDetailViewController" customModule="_5_Dollars" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="WeekdaySelector" id="hm5-yV-1qV" customClass="WeekdaySelectionViewController" customModule="_5_Dollars" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="PsP-0S-w5C">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="weekday" editingAccessoryType="checkmark" id="5Vf-wm-fMX">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="selection" editingAccessoryType="checkmark" id="5Vf-wm-fMX">
                                 <rect key="frame" x="20" y="55.333332061767578" width="353" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="5Vf-wm-fMX" id="Nml-ki-Ubk">
@@ -377,15 +377,15 @@
             </objects>
             <point key="canvasLocation" x="3646.5648854961833" y="645.77464788732402"/>
         </scene>
-        <!--Rotation Detail View Controller-->
+        <!--Rotation Selection View Controller-->
         <scene sceneID="cGs-FH-YbP">
             <objects>
-                <tableViewController storyboardIdentifier="RotationDetail" id="lvy-gG-dzu" customClass="RotationDetailViewController" customModule="_5_Dollars" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RotationSelector" id="lvy-gG-dzu" customClass="RotationSelectionViewController" customModule="_5_Dollars" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="insetGrouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="y9G-Hp-9IP">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="rotation" editingAccessoryType="checkmark" id="PnA-OK-N9u">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="selection" editingAccessoryType="checkmark" id="PnA-OK-N9u">
                                 <rect key="frame" x="20" y="55.333332061767578" width="353" height="43.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PnA-OK-N9u" id="9Re-nO-4IV">

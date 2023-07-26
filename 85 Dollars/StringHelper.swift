@@ -10,7 +10,7 @@ import UIKit
 class StringHelper {
     
     static func string(for weeks: [Rotation]) -> String {
-        if weeks.count == 4 {
+        if weeks.count == 5 {
             return "Every week"
         }
         var rotationString = "of the month"

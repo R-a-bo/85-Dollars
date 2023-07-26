@@ -14,8 +14,9 @@ final class StringHelperTests: XCTestCase {
         XCTAssertEqual(StringHelper.string(for: [Rotation.First]), "1st of the month")
         XCTAssertEqual(StringHelper.string(for: [Rotation.Third, Rotation.Fourth]), "3rd and 4th of the month")
         XCTAssertEqual(StringHelper.string(for: [Rotation.Fifth]), "5th of the month")
-        XCTAssertEqual(StringHelper.string(for: [Rotation.First, Rotation.Second, Rotation.Third, Rotation.Fourth]), "Every week")
+        XCTAssertEqual(StringHelper.string(for: [Rotation.First, Rotation.Second, Rotation.Third, Rotation.Fourth, Rotation.Fifth]), "Every week")
         XCTAssertEqual(StringHelper.string(for: [Rotation.First, Rotation.Second, Rotation.Fourth]), "1st, 2nd and 4th of the month")
+        XCTAssertEqual(StringHelper.string(for: [Rotation.First, Rotation.Second, Rotation.Third, Rotation.Fourth]), "1st, 2nd, 3rd, and 4th of the month")
     }
     
     func testWeekdaysStringTruncated() {

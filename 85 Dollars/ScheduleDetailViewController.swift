@@ -100,10 +100,23 @@ class ScheduleDetailViewController: UITableViewController {
     }
     
     func openRotationSelector() {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "RotationDetail") as? RotationDetailViewController {
-            vc.weeks = schedule.weeks
-            vc.callback = { [weak self] returnedRotation in
-                self?.schedule.weeks = returnedRotation
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "RotationSelector") as? RotationSelectionViewController {
+            vc.loadRotation(schedule.weeks)
+            vc.callback = { [weak self] returnedSelection in
+                var weeks = [Rotation]()
+                var allSelected = true
+                for i in 0..<returnedSelection.count {
+                    if returnedSelection[i] {
+                        guard let week = Rotation(rawValue: i) else { return }
+                        weeks.append(week)
+                    } else {
+                        allSelected = false
+                    }
+                }
+                if allSelected {
+                    weeks.append(Rotation.Fifth)
+                }
+                self?.schedule.weeks = weeks
                 self?.tableView.reloadData()
             }
             navigationController?.pushViewController(vc, animated: true)
@@ -111,10 +124,17 @@ class ScheduleDetailViewController: UITableViewController {
     }
     
     func openWeekdaySelector() {
-        if let vc = storyboard?.instantiateViewController(withIdentifier: "WeekdayDetail") as? WeekdayDetailViewController {
-            vc.weekdays = schedule.weekdays
-            vc.callback = { [weak self] returnedWeekdays in
-                self?.schedule.weekdays = returnedWeekdays
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "WeekdaySelector") as? WeekdaySelectionViewController {
+            vc.loadWeekdays(schedule.weekdays)
+            vc.callback = { [weak self] returnedSelection in
+                var days = [Weekday]()
+                for i in 0..<returnedSelection.count {
+                    if returnedSelection[i] {
+                        guard let day = Weekday(rawValue: i + 1) else { return }
+                        days.append(day)
+                    }
+                }
+                self?.schedule.weekdays = days
                 self?.tableView.reloadData()
             }
             navigationController?.pushViewController(vc, animated: true)
