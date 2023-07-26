@@ -16,7 +16,7 @@ final class StringHelperTests: XCTestCase {
         XCTAssertEqual(StringHelper.string(for: [Rotation.Fifth]), "5th of the month")
         XCTAssertEqual(StringHelper.string(for: [Rotation.First, Rotation.Second, Rotation.Third, Rotation.Fourth, Rotation.Fifth]), "Every week")
         XCTAssertEqual(StringHelper.string(for: [Rotation.First, Rotation.Second, Rotation.Fourth]), "1st, 2nd and 4th of the month")
-        XCTAssertEqual(StringHelper.string(for: [Rotation.First, Rotation.Second, Rotation.Third, Rotation.Fourth]), "1st, 2nd, 3rd, and 4th of the month")
+        XCTAssertEqual(StringHelper.string(for: [Rotation.First, Rotation.Second, Rotation.Third, Rotation.Fourth]), "1st, 2nd, 3rd and 4th of the month")
     }
     
     func testWeekdaysStringTruncated() {
@@ -43,9 +43,12 @@ final class StringHelperTests: XCTestCase {
         result = NSMutableAttributedString(string: "Mon, Wed and Fri \n2nd, 3rd and 4th of the month")
         result.setAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)], range: NSMakeRange(0, 17))
         XCTAssertEqual(StringHelper.string(for: Schedule(weekdays: [Weekday.Monday, Weekday.Wednesday, Weekday.Friday], weeks: [Rotation.Second, Rotation.Third, Rotation.Fourth])), result)
-        result = NSMutableAttributedString(string: "Every day\nEvery week")
+        result = NSMutableAttributedString(string: "Every day\n1st, 2nd, 3rd and 4th of the month")
         result.setAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)], range: NSMakeRange(0, 9))
         XCTAssertEqual(StringHelper.string(for: Schedule(weekdays: [Weekday.Sunday, Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Friday, Weekday.Saturday], weeks: [Rotation.First, Rotation.Second, Rotation.Third, Rotation.Fourth])), result)
+        result = NSMutableAttributedString(string: "Every day\nEvery week")
+        result.setAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 30)], range: NSMakeRange(0, 9))
+        XCTAssertEqual(StringHelper.string(for: Schedule(weekdays: [Weekday.Sunday, Weekday.Monday, Weekday.Tuesday, Weekday.Wednesday, Weekday.Thursday, Weekday.Friday, Weekday.Saturday], weeks: [Rotation.First, Rotation.Second, Rotation.Third, Rotation.Fourth, Rotation.Fifth])), result)
     }
     
     func testAlarmString() {

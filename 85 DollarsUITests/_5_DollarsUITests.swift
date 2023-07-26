@@ -55,11 +55,11 @@ final class _5_DollarsUITests: XCTestCase {
     
     func testToggleSchedule() {
         app.launch()
-        XCTAssertEqual(app.switches.element.value as? String, "0")
-        app.switches.element.tap()
         XCTAssertEqual(app.switches.element.value as? String, "1")
         app.switches.element.tap()
         XCTAssertEqual(app.switches.element.value as? String, "0")
+        app.switches.element.tap()
+        XCTAssertEqual(app.switches.element.value as? String, "1")
     }
     
     func testEditSchedule() {
