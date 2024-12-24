@@ -180,12 +180,27 @@ class ScheduleDetailViewController: UITableViewController {
     }
     
     @objc func doneButtonTapped() {
-        if let callback = callback {
-            callback(schedule)
-        } else {
-            print("Missing callback for schedule list")
+        if schedule.weeks.count == 0 || schedule.weekdays.count == 0 {
+            var message: String?
+            if schedule.weeks.count == 0 && schedule.weekdays.count > 0 {
+                message = "Please add a monthly rotation to your schedule"
+            } else if schedule.weeks.count > 0 {
+                message = "Please add weekdays to your schedule"
+            } else {
+                message = "Please add a monthly rotation and weekdays to your schedule"
+            }
+            let ac = UIAlertController(title: "Empty schedule", message: message, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
         }
-        dismiss(animated: true)
+        else {
+            if let callback = callback {
+                callback(schedule)
+            } else {
+                print("Missing callback for schedule list")
+            }
+            dismiss(animated: true)
+        }
     }
     
     @objc func cancelButtonTapped() {

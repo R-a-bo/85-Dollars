@@ -24,6 +24,13 @@ class ScheduleListViewController: UITableViewController {
         
         if schedules.isEmpty { setBackground() }
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        for (schedule, cell) in zip(schedules, tableView.visibleCells) {
+            guard let cell = cell as? ScheduleListViewCell else { return }
+            cell.setupCountdownLabel(schedule: schedule)
+        }
+    }
 
     // MARK: - Table view data source
 
@@ -80,6 +87,7 @@ class ScheduleListViewController: UITableViewController {
             activeSchedule = indexOfCurrentCell
         } else {
             activeSchedule = -1
+            DatesHelper.cancelAlarms()
         }
         
         cell.setup(isActive: cell.switchButton.isOn, schedule: schedules[indexOfCurrentCell])

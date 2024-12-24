@@ -17,7 +17,7 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
     @IBOutlet var countdownLabel: UILabel!
     
     var calendarView = UICalendarView()
-    var cleaningDays = [Int: Set<DateComponents>]()
+    var cleaningDays = NSCache<NSNumber, DateSet>()
     var schedule: Schedule?
     var switchCallback: (() -> Void)?
     
@@ -25,11 +25,7 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
         self.schedule = schedule
         switchButton.setOn(isActive, animated: true)
         scheduleLabel.isHidden = isActive
-        if let daysUntilCleaning = DatesHelper.daysUntilCleaning(for: schedule) {
-            countdown.text = String(daysUntilCleaning)
-        } else {
-            countdown.text = "∞"
-        }
+        setupCountdownLabel(schedule: schedule)
         if isActive {
             setupCalendar()
             DatesHelper.setAlarms(for: schedule)
@@ -41,8 +37,16 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
         countdownLabel.adjustsFontSizeToFitWidth = true
     }
     
+    func setupCountdownLabel(schedule: Schedule) {
+        if let daysUntilCleaning = DatesHelper.daysUntilCleaning(for: schedule) {
+            countdown.text = String(daysUntilCleaning)
+        } else {
+            countdown.text = "∞"
+        }
+    }
+    
     func setupCalendar() {
-        cleaningDays = [Int: Set<DateComponents>]()
+        cleaningDays = NSCache<NSNumber, DateSet>()
         
         let gregorianCalendar = Calendar(identifier: .gregorian)
         calendarView.calendar = gregorianCalendar
@@ -70,11 +74,12 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
     
     func calendarView(_ calendarView: UICalendarView, decorationFor dateComponents: DateComponents) -> UICalendarView.Decoration? {
         guard let schedule = schedule else { return nil }
-        let monthsKey = dateComponents.month! + dateComponents.year! * 12
-        if !cleaningDays.keys.contains(monthsKey) {
-            cleaningDays[monthsKey] = DatesHelper.getCleaningDays(for: schedule, in: dateComponents.month!, of: dateComponents.year!)
-        } 
-        if cleaningDays[monthsKey]!.contains(dateComponents) {
+        let monthsKey = dateComponents.month! + dateComponents.year! * 12 as NSNumber
+        if cleaningDays.object(forKey: monthsKey) == nil {
+            let days = DatesHelper.getCleaningDays(for: schedule, in: dateComponents.month!, of: dateComponents.year!)
+            cleaningDays.setObject(DateSet(days), forKey: monthsKey)
+        }
+        if cleaningDays.object(forKey: monthsKey)!.dates.contains(dateComponents) {
             return .customView {
                 let cleaningEmoji = UILabel()
                 cleaningEmoji.text = "🧹"
@@ -84,4 +89,15 @@ class ScheduleListViewCell: UITableViewCell, UICalendarViewDelegate {
             return nil
         }
     }
+}
+
+// class wrapper for Set<DateComponents> to let it play nicely with NSCache
+class DateSet {
+    
+    let dates: Set<DateComponents>
+    
+    init(_ dates: Set<DateComponents>) {
+        self.dates = dates
+    }
+    
 }

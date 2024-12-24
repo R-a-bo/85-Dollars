@@ -38,7 +38,6 @@ class DatesHelper {
     // returns set of street cleaning days as DateComponents's for the given month
     static func getCleaningDays(for schedule: Schedule, in month: Int, of year: Int) -> Set<DateComponents> {
         let currentMonth = calendar.dateComponents([.year, .month], from: currentDate())
-        let monthsFromNowComponents = calendar.dateComponents([.month], from: DateComponents(year: currentMonth.year!, month: currentMonth.month!), to: DateComponents(year: year, month: month))
         
         var dates = Set<DateComponents>()
         
@@ -92,6 +91,10 @@ class DatesHelper {
             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
             notificationCenter.add(request, withCompletionHandler: nil)
         }
+    }
+    
+    static func cancelAlarms() {
+        notificationCenter.removeAllPendingNotificationRequests()
     }
     
 }
