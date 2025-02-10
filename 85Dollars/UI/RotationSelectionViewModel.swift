@@ -7,19 +7,19 @@
 
 import SwiftUI
 
-protocol RotationPickerViewModel: ObservableObject {
-    var elements: [RotationPickerElement] { get }
+protocol RotationSelectionViewModel: ObservableObject {
+    var elements: [RotationSelectionElement] { get }
     func didTapElement(_ id: Int)
 }
 
-class RotationPickerViewModelStub: RotationPickerViewModel {
+class RotationSelectionViewModelStub: RotationSelectionViewModel {
     
-    @Published var elements: [RotationPickerElement]
+    @Published var elements: [RotationSelectionElement]
     
     init() {
         let daysOfWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
         var elements = daysOfWeek.enumerated().map {
-            RotationPickerElement(id: $0.0, text: $0.1, isSelected: false)
+            RotationSelectionElement(id: $0.0, text: $0.1, isSelected: false)
         }
         elements[1].isSelected = true
         self.elements = elements

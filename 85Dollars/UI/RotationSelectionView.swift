@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct RotationPickerElement: Identifiable {
+struct RotationSelectionElement: Identifiable {
     var id: Int
     var text: String
     var isSelected: Bool
 }
 
-struct RotationPickerView<ViewModel: RotationPickerViewModel>: View {
+struct RotationSelectionView<ViewModel: RotationSelectionViewModel>: View {
     
     @StateObject var viewModel: ViewModel
     
@@ -37,5 +37,5 @@ struct RotationPickerView<ViewModel: RotationPickerViewModel>: View {
 }
 
 #Preview {
-    RotationPickerView(viewModel: RotationPickerViewModelStub())
+    RotationSelectionView(viewModel: RotationSelectionViewModelStub())
 }
