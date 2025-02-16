@@ -13,13 +13,14 @@ struct RotationSelectionElement: Identifiable {
     var isSelected: Bool
 }
 
-struct RotationSelectionView<ViewModel: RotationSelectionViewModel>: View {
+struct RotationSelectionView: View {
     
-    @StateObject var viewModel: ViewModel
+    @StateObject var viewModel: RotationSelectionViewModel
     
     // TODO: pretty up buttons
     var body: some View {
         HStack(spacing: 1) {
+            Spacer()
             ForEach(viewModel.elements) { element in
                 Button {
                     viewModel.didTapElement(element.id)
@@ -32,10 +33,11 @@ struct RotationSelectionView<ViewModel: RotationSelectionViewModel>: View {
                 .buttonStyle(.bordered)
                 .buttonBorderShape(.roundedRectangle(radius: 0))
             }
+            Spacer()
         }
     }
 }
 
 #Preview {
-    RotationSelectionView(viewModel: RotationSelectionViewModelStub())
+    RotationSelectionView(viewModel: MonthweekSelectionViewModel())
 }
