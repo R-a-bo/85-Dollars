@@ -8,3 +8,7 @@
 enum UIError: Error {
     case invalidData
 }
+
+enum RepositoryError: Error {
+    case scheduleNotFound
+}

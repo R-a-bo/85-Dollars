@@ -50,6 +50,18 @@ class WeekdaySelectionViewModel: RotationSelectionViewModel {
         }
         super.init(elements: elements)
     }
+    
+    func toWeekdays() -> [Weekday] {
+        let selectedIndicies = (0..<elements.count).filter { elements[$0].isSelected }.map { Int($0) }
+        let weekdays: [Weekday] = selectedIndicies.compactMap {
+            guard let weekday = Weekday(rawValue: $0) else {
+                Self.logger.error("Unable to convert selected index \($0) to weekday")
+                return nil
+            }
+            return weekday
+        }
+        return weekdays
+    }
 }
 
 class MonthweekSelectionViewModel: RotationSelectionViewModel {
@@ -122,5 +134,17 @@ class MonthweekSelectionViewModel: RotationSelectionViewModel {
             elements[5].isSelected = false
             elements[id].isSelected = false
         }
+    }
+    
+    func toMonthweeks() -> [Monthweek] {
+        let selectedIndicies = (0..<elements.count).filter { elements[$0].isSelected }.map { Int($0) }
+        let monthweeks: [Monthweek] = selectedIndicies.compactMap {
+            guard let monthweek = Monthweek(rawValue: $0) else {
+                Self.logger.error("Unable to convert selected index \($0) to weekday")
+                return nil
+            }
+            return monthweek
+        }
+        return monthweeks
     }
 }

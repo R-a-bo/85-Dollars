@@ -37,6 +37,7 @@ struct Alarm: Codable {
 
 // TODO: add support for hour of day
 struct Schedule: Codable {
+    let id: UUID
     var weekdays: [Weekday]
     var monthweeks: [Monthweek]
     var alarms: [Alarm]
